@@ -8,7 +8,7 @@ while true; do
             file_name=$(basename "$file")
             $HOME/.config/bspwm/scripts/AnimatedWall --stop
             $HOME/.config/bspwm/scripts/AnimatedWall --start "$file"
-            sleep 30
+            sleep 60
         fi
     done
 done
