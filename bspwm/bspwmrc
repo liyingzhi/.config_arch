@@ -59,6 +59,7 @@ exec picom --config "${HOME}"/.config/bspwm/config/picom/picom.conf &
 exec fcitx5 & # 输入法
 exec dunst -conf "$HOME"/.config/bspwm/config/dunst/dunstrc & # 通知程序
 exec nm-applet &
+exec caffeine-indicator &
 exec flameshot & # 截图工具
 exec udiskie --tray &
 exec deskflow &
