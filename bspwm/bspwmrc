@@ -71,3 +71,6 @@ feh --bg-scale "$HOME"/.config/bspwm/assest/background.jpg
 # 静态桌面壁纸
 # "$HOME"/.config/bspwm/scripts/AutoStaticWall &
 # "$HOME"/.config/bspwm/scripts/AutoWall &
+
+xrdb "${HOME}"/.config/bspwm/config/xresources
+xsetroot -cursor_name left_ptr
