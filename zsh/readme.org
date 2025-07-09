@@ -1,0 +1,40 @@
+* 常用指令
+** wdx
+*** wd, wdx
+*** ws, wdx set
+*** wsf, wdx set -f
+** edit
+*** copy <path>...
+*** paste [<path>]
+*** move [<path>]
+*** pasteln [<path>]
+*** delink <path>
+*** transpose <path1> <path2>
+** 查询历史路径，方便跳转
+*** ds, 查看历史目录列表
+*** cd -n
+** 查看目录结构, eza
+*** l, 查看目录
+*** lg, 查看目录并分组
+*** lt, 查看 tree 结构，并忽略 .git, .svn, node_modules 目录内容
+*** lti, lti a, 将 a 也加入 --ignore-glob 忽略列表里面
+*** ltl, ltl 1, 查看 tree 结构，并设置 level 级别为 1
+*** ltli, ltli 1 a,查看 tree 结构，并设置 level 级别为 1，将 a 也加入 --ignore-glob 忽略列表里面
+** utils
+*** miniemacs
+*** archupdate
+*** lzd, lazydocker
+** 创建文件夹，并跳转
+*** md dir, 创建文件 dir
+*** mcd dir, 创建文件 dir, 并跳转进入 dir
+** docker
+*** dr, docker run -it --rm
+** emacs
+*** e, emacs -nw
+*** eq, emacs -nw -Q
+*** ew, emacs
+*** eqw, emacs -Q
+*** ue, 'USER_EMACS_DIRECTORY=$PWD e'
+*** uew, 'USER_EMACS_DIRECTORY=$PWD ew'
+*** ec, 'emacsclient --alternate-editor= -nw'
+*** ecw, 'emacsclient --alternate-editor='
