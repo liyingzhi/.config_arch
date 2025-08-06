@@ -70,6 +70,7 @@ feh --bg-scale "$HOME"/.config/bspwm/assest/background.jpg
 
 # 静态桌面壁纸
 # "$HOME"/.config/bspwm/scripts/AutoStaticWall &
+# 动态桌面壁纸
 # "$HOME"/.config/bspwm/scripts/AutoWall &
 
 xrdb "${HOME}"/.config/bspwm/config/xresources
