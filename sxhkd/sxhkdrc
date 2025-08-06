@@ -34,6 +34,8 @@ ctrl + shift + f
 ctrl+ alt + j
 	bspc node -f prev.local.!hidden.window
 
+super + l
+    slock
 # preselect the direction
 ctrl + shift + {h,j,k,l}
 	bspc node -p {west,south,north,east}
