@@ -25,7 +25,7 @@ sudo pacman -S fcitx5-gtk fcitx5-qt &&
 sudo pacman -S fcitx5-configtool &&
 
 # pulseaudio
-ya -S pulseaudio pavucontrol &&
+yay -S pulseaudio pavucontrol &&
 
 # mount
 sudo pacman -S udisk2 udiskie
