@@ -23,7 +23,7 @@
 #check_nosync = "false"
 
 ## This config option defines the number of children in a path that is locally removed which will be classified as a 'big data delete' to safeguard large data removals - which are typically accidental local delete events.
-#classify_as_big_delete = "1000"
+classify_as_big_delete = "1000"
 
 ## This config option provides the capability to cleanup local files and folders if they are removed online.
 #cleanup_local_files = "false"
@@ -170,7 +170,7 @@ sync_business_shared_items = "true"
 #sync_root_files = "false"
 
 ## Number of threads to use for upload/download.
-#threads = "8"
+threads = "4"
 
 ## File transfer ordering between client and OneDrive.
 #transfer_order = "default"
