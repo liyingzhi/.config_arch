@@ -104,7 +104,7 @@ download_only = "true"
 #monitor_log_frequency = "12"
 
 ## This configuration option controls whether local deletes are replicated to OneDrive when using --upload-only.
-#no_remote_delete = "false"
+no_remote_delete = "true"
 
 ## This setting controls whether the client logs GUI notifications when file actions occur.
 #notify_file_actions = "false"
