@@ -4,6 +4,9 @@
 # xrandr --output DP-2 --mode 3840x2160 --rate 160 --primary
 # xrandr --output DP-4 --mode 2560x1440 --rate 144 --left-of DP-2
 
+# set DP-2 display interface brightness and gamma value
+xrandr --output DP-2 --brightness 1.1 --gamma 0.76:0.75:0.68
+
 # xorg dpms config
 xset dpms 0 0 0
 
