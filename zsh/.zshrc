@@ -91,6 +91,9 @@ fi
 # 改用 Ctrl+Space 完全接受建议
 bindkey '^ ' autosuggest-accept
 
+# 改用 ALT+. 完全接受建议
+# bindkey '^[.' autosuggest-accept
+
 ### Filesystem management
 
 #### cp, mv, ln
@@ -298,10 +301,17 @@ if [ -f ~/.fzf.zsh ]; then
     . ~/.fzf.zsh
 fi
 
+# Set up zoxide
+eval "$(zoxide init zsh)"
+
 # alias eza="eza --icons=auto --hyperlink --color=always --color-scale=all --color-scale-mode=gradient --git --git-repos"
 # alias ls="eza"
 # alias ls='ls --color=auto'
-alias miniemacs='emacs --init-directory=/home/ii/mini-emacs/'
+
+# ➜  ~ ln -s /home/ii/github/mini-emacs-run.sh /home/ii/.local/bin/miniemacs
+# ➜  ~ ln -s /home/ii/github/igc_emacs/igc-emacs.sh /home/ii/.local/bin/igcemacs
+# alias miniemacs='emacs --init-directory=/home/ii/github/mini-emacs/'
+# alias igcemacs='/home/ii/github/igc_emacs/igc-emacs.sh'
 alias grep='grep --color=auto'
 alias archupdate="$HOME/github/scripts/archupdate"
 
@@ -334,3 +344,7 @@ alias archupdate="$HOME/github/scripts/archupdate"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias lzd='lazydocker'
+
+# rustup index repos mirror
+export RUSTUP_DIST_SERVER="https://rsproxy.cn"
+export RUSTUP_UPDATE_ROOT="https://rsproxy.cn/rustup"
