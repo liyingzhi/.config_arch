@@ -27,7 +27,7 @@ _fzf_compgen_dir() {
 
 export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_CTRL_T_COMMAND='fd --type f'
-export FZF_ALT_C_COMMAND='fd --type f'
+export FZF_ALT_C_COMMAND='fd --type d'
 
 
 # bind '"\C-x": "\C-r\C-m"'
