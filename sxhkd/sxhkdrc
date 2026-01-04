@@ -2,7 +2,7 @@
 # wm independent hotkeys
 #
 
-# app select
+# 01. app select
 # terminal emulator
 ctrl + alt + k
 	wmctrl -x -a kitty || kitty
@@ -31,19 +31,20 @@ ctrl + alt + n
 ctrl + alt + c
     bspc node -c
 
-# run rofi combi
+# 02. run rofi combi
 alt + space
     rofi -show combi -combi-modes window,drun,run,filebrowser -modes combi
 
-# slock / i3lock
+# 03. slock / i3lock
 super + l
     i3lock
 
+# 04. focus or send desktop/node
 # focus or send to the given desktop
 alt + {_,shift + }{1-8}
 	bspc {desktop -f,node -d} '^{1-8}'
 
-# focus or send to next/befor node
+# focus or send to next/prev node
 ctrl + alt + j
 	bspc node -f prev.local.!hidden.window
 alt + j
@@ -55,9 +56,11 @@ alt + k
 alt + Tab
 	bspc node -f last
 
+# focus the next node/desktop
 alt + grave
     bspc node -f next.window
 
+# focus the prev node/desktop
 alt + shift + grave
     bspc node -f prev.window
 
@@ -65,7 +68,10 @@ alt + shift + grave
 alt + bracket{left,right}
 	bspc desktop -f {prev,next}.local
 
-# desktop layout
+super + {Left,Right}
+	bspc desktop -f {prev,next}
+
+# 05. desktop layout
 # alternate between the tiled and monocle layout
 ctrl + shift + f
 	bspc desktop -l next
@@ -77,9 +83,7 @@ alt + shift + f
 super + {t,shift + t,s,f}
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
-super + {Left,Right}
-	bspc desktop -f {prev,next}
-
+# 05. move/resize node
 # move/resize
 super + ctrl + shift + {h,j,k,l}
 	bspc node -z {left -20 0,top 0 20,top 0 -20,left 20 0}
