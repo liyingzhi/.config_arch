@@ -54,6 +54,7 @@ bspc rule -a firefox desktop='^4' follow=on
 bspc rule -a QQ desktop='^8' follow=on
 bspc rule -a wechat desktop='^8' follow=on
 bspc rule -a Localsend desktop='^5' follow=on
+bspc rule -a Zotero desktop='^5' follow=on
 bspc rule -a Deskflow desktop='^6'
 bspc rule -a syncthing desktop='^6'
 
