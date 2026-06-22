@@ -5,23 +5,23 @@ local sub2Mod = "CTRL" -- Sets "Windows" key as sub2 modifier
 local menu     = "rofi -show combi -combi-modes window,drun,run,filebrowser -modes combi"
 local terminal = "kitty"
 local browser  = "firefox"
+local filemanager  = "thunar" -- dplphin, thunar
+
+-- Quit hyprland
+hl.bind(sub1Mod .. " + CTRL + Q",         hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 
 -- Application launchers
+hl.bind(mainMod .. " + SPACE",         hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + CTRL + E",      hl.dsp.exec_cmd("emacs"))
 hl.bind(mainMod .. " + CTRL + S",      hl.dsp.exec_cmd("localsend"))
 hl.bind(mainMod .. " + CTRL + I",      hl.dsp.exec_cmd("igcemacs"))
 hl.bind(mainMod .. " + CTRL + K", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + CTRL + F",      hl.dsp.exec_cmd(browser))
-hl.bind(mainMod .. " + CTRL + N",      hl.dsp.exec_cmd("thunar"))
-
-
-hl.bind(mainMod .. " + SPACE",         hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + CTRL + N",      hl.dsp.exec_cmd(filemanager))
+hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd(terminal .. " btop"))
 
 -- Window management
 hl.bind(mainMod .. " + CTRL + C", hl.dsp.window.close())
-
-hl.bind(sub1Mod .. " + CTRL + Q",         hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
-
 hl.bind(sub1Mod .. " + S",         hl.dsp.window.float({ action = "toggle" }))
 hl.bind(sub2Mod .. " + SHIFT + F",         hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + SHIFT + F",         hl.dsp.window.fullscreen())
@@ -29,7 +29,6 @@ hl.bind(mainMod .. " + SHIFT + F",         hl.dsp.window.fullscreen())
 -- Screenshot
 hl.bind(mainMod .. " + SHIFT + S",  hl.dsp.exec_cmd("hyprshot -m region --clipboard-only"))
 hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("hyprshot -m window"))
-hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd(terminal .. " btop"))
 hl.bind(mainMod .. " + CTRL + A",      hl.dsp.exec_cmd("flameshot gui"))
 
 -- Cycle focus
