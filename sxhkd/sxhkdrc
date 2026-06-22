@@ -10,6 +10,9 @@ ctrl + alt + k
 ctrl + alt + t
 	kitty
 
+ctrl + shift + t
+	kitty btop
+
 ctrl + alt + a
    flameshot gui
 
