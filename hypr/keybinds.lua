@@ -32,7 +32,7 @@ hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("hyprshot -m window"))
 hl.bind(mainMod .. " + CTRL + A",      hl.dsp.exec_cmd("flameshot gui"))
 
 -- Clipboard
-hl.bind(mainMod .. " + V", hl.dsp_exec_cmd("clipvault list | rofi -dmenu -display-columns 2 | clipvault get | wl-copy"))
+hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("clipvault list | rofi -dmenu -display-columns 2 | clipvault get | wl-copy"))
 
 -- Cycle focus
 hl.bind(mainMod .. " + GRAVE", hl.dsp.window.cycle_next())
