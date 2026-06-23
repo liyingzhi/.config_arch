@@ -24,5 +24,8 @@
 !/wdx/
 !/btop/
 !onedrive/config
+!/gtk-3.0/
+!/gtk-4.0/
+
 !ArchInstall
 !/fcitx5/
