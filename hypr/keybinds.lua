@@ -33,7 +33,10 @@ hl.bind(mainMod .. " + CTRL + A",      hl.dsp.exec_cmd("flameshot gui"))
 
 -- Clipboard
 -- yay -S clipvault
-hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("clipvault list | rofi -dmenu -display-columns 2 | clipvault get | wl-copy"))
+-- hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("clipvault list | rofi -dmenu -display-columns 2 | clipvault get | wl-copy"))
+
+-- yay -S clipcat
+hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("clipcat-menu insert"))
 
 -- Cycle focus
 hl.bind(mainMod .. " + GRAVE", hl.dsp.window.cycle_next())

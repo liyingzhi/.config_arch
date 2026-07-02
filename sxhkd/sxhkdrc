@@ -34,9 +34,12 @@ ctrl + alt + n
 ctrl + alt + c
     bspc node -c
 
-# 02. run rofi combi
+# 02.1 run rofi combi
 alt + space
     rofi -show combi -combi-modes window,drun,run,filebrowser -modes combi
+# 02.2
+alt + v
+    clipcat-menu insert
 
 # 03. slock / i3lock
 super + l
