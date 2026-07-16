@@ -78,7 +78,7 @@ flameshot & # 截图工具
 udiskie --tray &
 deskflow &
 syncthing &
-clipcatd
+clipcatd &
 
 # 静态桌面壁纸
 # feh --bg-max "$HOME"/.config/bspwm/assest/background.jpg
