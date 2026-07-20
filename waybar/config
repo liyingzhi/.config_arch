@@ -37,7 +37,7 @@
     "spacing": 10
   },
   "clock": {
-    "format": "{:%Y-%m-%d %H:%M:%S 星期 %w }",
+    "format": "{:%Y-%m-%d %H:%M 星期 %w }",
     "interval": 1
   },
   "backlight": {
