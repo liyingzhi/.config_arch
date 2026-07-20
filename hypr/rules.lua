@@ -77,6 +77,14 @@ hl.window_rule({
     workspace = "5",
 })
 
+-- deskflow: workspace 6
+hl.window_rule({
+    name  = "deskflow",
+    match = { title = ".*Deskflow.*" },
+
+    workspace = "6",
+})
+
 -- LocalSend: workspace 8
 hl.window_rule({
     name  = "localsend",

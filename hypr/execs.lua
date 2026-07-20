@@ -22,5 +22,8 @@ hl.on("hyprland.start", function ()
   hl.exec_cmd("nm-applet")
   hl.exec_cmd("swaync")
 
+  -- deskflow share keyboard and mouse
+  hl.exec_cmd("deskflow")
+
   -- hl.exec_cmd("browserpass")
 end)
