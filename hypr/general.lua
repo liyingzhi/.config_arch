@@ -103,7 +103,9 @@ hl.config({
         kb_layout = "us",
         kb_variant = "",
         kb_model = "",
-        kb_options = "",
+        -- https://wiki.hypr.land/Configuring/Advanced-and-Cool/Uncommon-tips-and-tricks/
+        -- https://wiki.hypr.land/Configuring/Basics/Binds/
+        kb_options = "ctrl:nocaps",
         kb_rules = "",
 
         follow_mouse = 1,
