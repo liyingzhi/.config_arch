@@ -10,10 +10,10 @@ hl.on("hyprland.start", function ()
   hl.exec_cmd("fcitx5 --replace -d")
 
   -- Clipboard (use clipvault)
-  -- hl.exec_cmd("wl-paste --watch clipvault store")
+  hl.exec_cmd("wl-paste --watch clipvault store")
 
   -- Clipboard (use clipcatd)
-  hl.exec_cmd("clipcatd")
+  -- hl.exec_cmd("clipcatd")
 
   -- Bluetooth, notification
   -- hl.exec_cmd("blueman-tray")
