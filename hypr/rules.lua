@@ -61,18 +61,10 @@ hl.window_rule({
     workspace = "4",
 })
 
--- Discord: workspace 5
+-- Zotero: workspace 5
 hl.window_rule({
-    name  = "discord",
-    match = { title = ".*Discord" },
-
-    workspace = "5",
-})
-
--- QQ: workspace 5
-hl.window_rule({
-    name  = "qq",
-    match = { title = ".*QQ.*" },
+    name  = "Zotero",
+    match = { title = ".*Zotero.*" },
 
     workspace = "5",
 })
@@ -85,10 +77,34 @@ hl.window_rule({
     workspace = "6",
 })
 
--- LocalSend: workspace 8
+-- LocalSend: workspace 7
 hl.window_rule({
     name  = "localsend",
     match = { title = "LocalSend" },
+
+    workspace = "7",
+})
+
+-- Discord: workspace 8
+hl.window_rule({
+    name  = "discord",
+    match = { title = ".*Discord" },
+
+    workspace = "8",
+})
+
+-- QQ: workspace 8
+hl.window_rule({
+    name  = "qq",
+    match = { title = ".*QQ.*" },
+
+    workspace = "8",
+})
+
+-- Wechat: workspace 8
+hl.window_rule({
+    name  = "wechat",
+    match = { title = ".*Weixin.*" },
 
     workspace = "8",
 })
