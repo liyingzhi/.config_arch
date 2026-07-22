@@ -77,11 +77,12 @@ hl.bind(sub1Mod .. " + RIGHT",      hl.dsp.focus({ workspace = "e+1" }))
 hl.bind(sub1Mod .. " + LEFT",       hl.dsp.focus({ workspace = "e-1" }))
 
 -- Move/resize windows with mainMod + LMB/RMB and dragging
-hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
-hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+hl.bind(sub1Mod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
+hl.bind(sub1Mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- Resize submap: enter with mainMod + SHIFT + R
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.submap("resize"))
+hl.bind(sub2Mod .. " + SHIFT + R", hl.dsp.submap("resize"))
 
 hl.define_submap("resize", function()
     hl.bind("l", hl.dsp.window.resize({ x = 10,  y = 0,  relative = true }), { repeating = true })
