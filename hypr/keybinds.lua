@@ -48,8 +48,12 @@ hl.bind(mainMod .. " + CTRL + A",      hl.dsp.exec_cmd("flameshot gui"))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("clipcat-menu insert"))
 
 -- Cycle through windows in the current workspace
-hl.bind(mainMod .. " + GRAVE", hl.dsp.window.cycle_next())
+-- hl.bind(mainMod .. " + GRAVE", hl.dsp.window.cycle_next())
+hl.bind(mainMod .. " + GRAVE", hl.dsp.focus({ workspace = "e+1" }))
 hl.bind(mainMod .. " + TAB", hl.dsp.focus({last = true}))
+-- Cycle through windows in the current workspace
+hl.bind(mainMod .. " + J", hl.dsp.window.cycle_next())
+hl.bind(mainMod .. " + K", hl.dsp.window.cycle_next({next = false}))
 
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT/CTRL + [0-9]
