@@ -7,28 +7,37 @@ local terminal = "kitty"
 local browser  = "firefox"
 local filemanager  = "thunar" -- dplphin, thunar
 
+local function focus_or_raise(process, class, command)
+    return string.format(
+        [[pgrep %s && hyprctl dispatch 'hl.dsp.focus({ window = "class:%s" })' || %s]],
+        process,
+        class,
+        command)
+end
+
 -- Quit hyprland
 hl.bind(sub1Mod .. " + CTRL + Q",         hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 
 -- Application launchers
 hl.bind(mainMod .. " + SPACE",         hl.dsp.exec_cmd(menu))
-hl.bind(mainMod .. " + CTRL + E",      hl.dsp.exec_cmd("emacs"))
-hl.bind(mainMod .. " + CTRL + S",      hl.dsp.exec_cmd("localsend"))
-hl.bind(mainMod .. " + CTRL + I",      hl.dsp.exec_cmd("igcemacs"))
-hl.bind(mainMod .. " + CTRL + K", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + CTRL + F",      hl.dsp.exec_cmd(browser))
-hl.bind(mainMod .. " + CTRL + N",      hl.dsp.exec_cmd(filemanager))
-hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd(terminal .. " btop"))
+hl.bind(mainMod .. " + CTRL + E",      hl.dsp.exec_cmd(focus_or_raise("emacs", "Emacs", "emacs")))
+hl.bind(mainMod .. " + CTRL + S",      hl.dsp.exec_cmd(focus_or_raise("localsend", "localsend", "localsend")))
+hl.bind(mainMod .. " + CTRL + I",      hl.dsp.exec_cmd(focus_or_raise("igcemacs", "Emacs", "igcemacs")))
+hl.bind(mainMod .. " + CTRL + K",      hl.dsp.exec_cmd(focus_or_raise(terminal, terminal, terminal)))
+hl.bind(mainMod .. " + CTRL + T",      hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. " + CTRL + F",      hl.dsp.exec_cmd(focus_or_raise(browser, browser, browser)))
+hl.bind(mainMod .. " + CTRL + N",      hl.dsp.exec_cmd(focus_or_raise(filemanager, filemanager, filemanager)))
+hl.bind(mainMod .. " + SHIFT + T",     hl.dsp.exec_cmd(terminal .. " btop"))
 
 -- Window management
-hl.bind(mainMod .. " + CTRL + C", hl.dsp.window.close())
-hl.bind(sub1Mod .. " + S",         hl.dsp.window.float({ action = "toggle" }))
-hl.bind(sub2Mod .. " + SHIFT + F",         hl.dsp.window.fullscreen())
-hl.bind(mainMod .. " + SHIFT + F",         hl.dsp.window.fullscreen())
+hl.bind(mainMod .. " + CTRL + C",      hl.dsp.window.close())
+hl.bind(sub1Mod .. " + S",             hl.dsp.window.float({ action = "toggle" }))
+hl.bind(sub2Mod .. " + SHIFT + F",     hl.dsp.window.fullscreen())
+hl.bind(mainMod .. " + SHIFT + F",     hl.dsp.window.fullscreen())
 
 -- Screenshot
-hl.bind(mainMod .. " + SHIFT + S",  hl.dsp.exec_cmd("hyprshot -m region --clipboard-only"))
-hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("hyprshot -m window"))
+hl.bind(mainMod .. " + SHIFT + S",     hl.dsp.exec_cmd("hyprshot -m region --clipboard-only"))
+hl.bind(mainMod .. " + SHIFT + W",     hl.dsp.exec_cmd("hyprshot -m window"))
 hl.bind(mainMod .. " + CTRL + A",      hl.dsp.exec_cmd("flameshot gui"))
 
 -- Clipboard
@@ -38,7 +47,7 @@ hl.bind(mainMod .. " + CTRL + A",      hl.dsp.exec_cmd("flameshot gui"))
 -- yay -S clipcat
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("clipcat-menu insert"))
 
--- Cycle focus
+-- Cycle through windows in the current workspace
 hl.bind(mainMod .. " + GRAVE", hl.dsp.window.cycle_next())
 hl.bind(mainMod .. " + TAB", hl.dsp.focus({last = true}))
 
