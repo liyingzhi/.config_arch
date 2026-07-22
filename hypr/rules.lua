@@ -50,6 +50,7 @@ hl.window_rule({
     match = { title = ".*Emacs.*" },
 
     workspace  = "1",
+    focus_on_activate = true,
     fullscreen = true,
 })
 
@@ -57,7 +58,8 @@ hl.window_rule({
 hl.window_rule({
     name  = "firefox",
     match = { class = "firefox" },
-
+    
+    focus_on_activate = true,
     workspace = "4",
 })
 
@@ -66,6 +68,7 @@ hl.window_rule({
     name  = "Zotero",
     match = { title = ".*Zotero.*" },
 
+    focus_on_activate = true,
     workspace = "5",
 })
 
@@ -82,6 +85,7 @@ hl.window_rule({
     name  = "localsend",
     match = { title = "LocalSend" },
 
+    focus_on_activate = true,
     workspace = "7",
 })
 
@@ -90,6 +94,7 @@ hl.window_rule({
     name  = "discord",
     match = { title = ".*Discord" },
 
+    focus_on_activate = true,
     workspace = "8",
 })
 
@@ -98,6 +103,7 @@ hl.window_rule({
     name  = "qq",
     match = { title = ".*QQ.*" },
 
+    focus_on_activate = true,
     workspace = "8",
 })
 
@@ -106,6 +112,7 @@ hl.window_rule({
     name  = "wechat",
     match = { title = ".*Weixin.*" },
 
+    focus_on_activate = true,
     workspace = "8",
 })
 
@@ -113,7 +120,8 @@ hl.window_rule({
 hl.window_rule({
     name  = "audiorelay",
     match = { title = "AudioRelay" },
-
+    
+    focus_on_activate = true,
     workspace = "9",
 })
 
