@@ -57,7 +57,8 @@ hl.window_rule({
 hl.window_rule({
     name  = "firefox",
     match = { class = "firefox" },
-
+    
+    focus_on_activate = true,
     workspace = "4",
 })
 
