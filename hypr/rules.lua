@@ -58,7 +58,7 @@ hl.window_rule({
 hl.window_rule({
     name  = "firefox",
     match = { class = "firefox" },
-    
+
     focus_on_activate = true,
     workspace = "4",
 })
@@ -120,7 +120,7 @@ hl.window_rule({
 hl.window_rule({
     name  = "audiorelay",
     match = { title = "AudioRelay" },
-    
+
     focus_on_activate = true,
     workspace = "9",
 })
@@ -133,4 +133,23 @@ hl.window_rule({
     float  = true,
     center = true,
     size   = "(monitor_w*0.5) (monitor_h*0.5)",
+})
+
+-- flameshot
+hl.window_rule({
+    match       = { class = "flameshot" },
+    no_anim     = true,
+    pin         = true,
+    float       = true,
+    decorate    = false,
+    no_blur     = true,
+    no_shadow   = true,
+})
+hl.window_rule({
+    match   = { class = "flameshot", title = "flameshot" },
+    move    = { 0, 0 },
+})
+hl.window_rule({
+    match = { class = "flameshot", title = "flameshot-pin" },
+    move  = { "cursor_x-(window_w*0.5)", "cursor_y-(window_h*0.5)" },
 })
