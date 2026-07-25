@@ -2,10 +2,10 @@
 	border: none;
 	border-radius: 10;
     font-family: FiraCode Nerd Font ;
-    font-size: 25px;
-	min-height: 45px;
-	/* font-size: 15px; */
-	/* min-height: 10px; */
+    /* font-size: 25px; */
+	/* min-height: 45px; */
+	font-size: 22px;
+	min-height: 30px;
 }
 
 window#waybar {
