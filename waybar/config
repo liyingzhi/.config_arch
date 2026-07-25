@@ -21,7 +21,7 @@
   "ext/workspaces": {
     "all-outputs": false,
     "format": "{name}",
-    "sort-by-number": true,
+    "sort-by-name": true,
     "on-click": "activate",
     "active-only": false,
   },
