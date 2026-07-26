@@ -9,7 +9,8 @@ local filemanager  = "thunar" -- dplphin, thunar
 
 local function focus_or_raise(process, class, command)
     return string.format(
-        [[pgrep %s && hyprctl dispatch 'hl.dsp.focus({ window = "class:%s" })' || %s]],
+        -- [[pgrep %s && hyprctl dispatch 'hl.dsp.focus({ window = "class:%s" })' || %s]],
+        [[hyprctl clients -j | jq -e '.[] | select(.class == "%s")' && hyprctl dispatch 'hl.dsp.focus({ window = "class:%s" })' || %s]],
         process,
         class,
         command)
@@ -53,6 +54,7 @@ hl.bind(mainMod .. " + GRAVE", hl.dsp.focus({ workspace = "e+1" }))
 hl.bind(mainMod .. " + TAB", hl.dsp.focus({last = true}))
 -- Cycle through windows in the current workspace
 hl.bind(mainMod .. " + J", hl.dsp.window.cycle_next())
+hl.bind(sub1Mod .. " + J", hl.dsp.window.cycle_next())
 hl.bind(mainMod .. " + K", hl.dsp.window.cycle_next({next = false}))
 
 -- Switch workspaces with mainMod + [0-9]
@@ -79,6 +81,10 @@ hl.bind(sub1Mod .. " + LEFT",       hl.dsp.focus({ workspace = "e-1" }))
 -- Move/resize windows with mainMod + LMB/RMB and dragging
 hl.bind(sub1Mod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
 hl.bind(sub1Mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+
+-- swapwithmaster for main type layout
+hl.bind(mainMod .. " + M", hl.dsp.layout("swapwithmaster master ignoremaster"))
+hl.bind(sub1Mod .. " + M", hl.dsp.layout("swapwithmaster master ignoremaster"))
 
 -- Resize submap: enter with mainMod + SHIFT + R
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.submap("resize"))
