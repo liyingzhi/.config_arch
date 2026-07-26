@@ -16,6 +16,7 @@
     "backlight",
     "battery",
     //"clock",
+    "custom/notification",
     "tray"
   ],
   "ext/workspaces": {
@@ -79,5 +80,27 @@
       "default": ["", "", ""]
     },
     "on-click": "pavucontrol"
+  },
+
+  "custom/notification": {
+    "tooltip": true,
+    "format": "<span size='13pt'>{icon} {0}</span>",
+    // "format": "{icon} {0}",
+    "format-icons": {
+      "notification": "󱅫",
+      "none": "󰂜",
+      "dnd-notification": "󰂠",
+      "dnd-none": "󰪓",
+      "inhibited-notification": "󰂛",
+      "inhibited-none": "󰪑",
+      "dnd-inhibited-notification": "󰂛",
+      "dnd-inhibited-none": "󰪑"
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
   }
 }
