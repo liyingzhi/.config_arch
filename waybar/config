@@ -5,6 +5,7 @@
   "height": 30,
   "modules-left": [
   "ext/workspaces",
+  //"hyprland/workspaces",
   "hyprland/window"
   ],
   "modules-center": [
@@ -19,13 +20,24 @@
     "custom/notification",
     "tray"
   ],
+
   "ext/workspaces": {
     "all-outputs": false,
     "format": "{name}",
     "sort-by-name": true,
     "on-click": "activate",
     "active-only": false,
+    "on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({workspace=\"e+1\"})' ",
+    "on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({workspace=\"e-1\"})' "
   },
+  "hyprland/workspaces": {
+    "all-outputs": false,
+    "format": "{name}",
+    "enable-bar-scroll": true,
+    "on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({workspace=\"e+1\"})' ",
+    "on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({workspace=\"e-1\"})' "
+  },
+
   "hyprland/window": {
     "format": "👉 {}",
     // "separate-outputs": false
