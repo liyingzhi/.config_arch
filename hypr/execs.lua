@@ -1,29 +1,33 @@
-hl.on("hyprland.start", function ()
-  hl.exec_cmd("~/.config/scripts/checkupdates.sh")
+hl.on("hyprland.start", function()
+	-- restart xdg-desktop-portal-hyprland
+	hl.exec_cmd("systemctl --user restart xdg-desktop-portal-hyprland.service")
 
-  -- wallpaper, Bar
-  -- hl.exec_cmd("~/.config/hypr/scripts/background-video.sh")
-  hl.exec_cmd("hyprpaper")
-  hl.exec_cmd("waybar")
+	-- checkupdates
+	-- hl.exec_cmd("~/.config/scripts/checkupdates.sh")
 
-  -- Input method
-  hl.exec_cmd("fcitx5 --replace -d")
+	-- wallpaper, Bar
+	-- hl.exec_cmd("~/.config/hypr/scripts/background-video.sh")
+	hl.exec_cmd("hyprpaper")
+	hl.exec_cmd("waybar")
 
-  -- Clipboard (use clipvault)
-  hl.exec_cmd("wl-paste --watch clipvault store")
+	-- Input method
+	hl.exec_cmd("fcitx5 --replace -d")
 
-  -- Clipboard (use clipcatd)
-  -- hl.exec_cmd("clipcatd")
+	-- Clipboard (use clipvault)
+	hl.exec_cmd("wl-paste --watch clipvault store")
 
-  -- Bluetooth, notification
-  -- hl.exec_cmd("blueman-tray")
-  hl.exec_cmd("flameshot")
-  hl.exec_cmd("blueman-applet")
-  hl.exec_cmd("nm-applet")
-  hl.exec_cmd("swaync")
+	-- Clipboard (use clipcatd)
+	-- hl.exec_cmd("clipcatd")
 
-  -- deskflow share keyboard and mouse
-  hl.exec_cmd("deskflow")
+	-- Bluetooth, notification
+	-- hl.exec_cmd("blueman-tray")
+	hl.exec_cmd("flameshot")
+	hl.exec_cmd("blueman-applet")
+	hl.exec_cmd("nm-applet")
+	hl.exec_cmd("swaync")
 
-  -- hl.exec_cmd("browserpass")
+	-- deskflow share keyboard and mouse
+	hl.exec_cmd("deskflow")
+
+	-- hl.exec_cmd("browserpass")
 end)
