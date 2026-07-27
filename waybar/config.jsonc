@@ -1,118 +1,116 @@
 {
-  "layer": "top",
-  "position": "top",
-  "spacing": 1,
-  "height": 30,
-  "modules-left": [
-  "ext/workspaces",
-  //"hyprland/workspaces",
-  "hyprland/window"
-  ],
-  "modules-center": [
-    "clock"
-  ],
-  "modules-right": [
-    "pulseaudio",
-    "network",
-    "backlight",
-    "battery",
-    //"clock",
-    "custom/notification",
-    "tray"
-  ],
+    "layer": "top",
+    "position": "top",
+    "spacing": 1,
+    "height": 30,
+    "modules-left": [
+        "ext/workspaces",
+        //"hyprland/workspaces",
+        "hyprland/window"
+    ],
+    "modules-center": ["clock"],
+    "modules-right": [
+        "pulseaudio",
+        "network",
+        "backlight",
+        "battery",
+        //"clock",
+        "custom/notification",
+        "tray"
+    ],
 
-  "ext/workspaces": {
-    "all-outputs": false,
-    "format": "{name}",
-    "sort-by-name": true,
-    "on-click": "activate",
-    "active-only": false,
-    "on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({workspace=\"e-1\"})' ",
-    "on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({workspace=\"e+1\"})' "
-  },
-  "hyprland/workspaces": {
-    "all-outputs": false,
-    "format": "{name}",
-    "enable-bar-scroll": true,
-    "on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({workspace=\"e+1\"})' ",
-    "on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({workspace=\"e-1\"})' "
-  },
-
-  "hyprland/window": {
-    "format": "👉 {}",
-    // "separate-outputs": false
-    // "max-length": 200,
-    "separate-outputs": true
-  },
-  "tray": {
-    // "icon-size": 21,
-    "spacing": 10
-  },
-  "clock": {
-    "format": "{:%Y-%m-%d %H:%M 星期 %w }",
-    "interval": 1
-  },
-  "backlight": {
-    // "device": "acpi_video1",
-    "format": "{percent}% {icon}",
-    "format-icons": ["", "", "", "", "", "", "", "", ""]
-  },
-  "battery": {
-    "interval": 30,
-    "format": "{capacity}% {icon}",
-    "format-charging": "{capacity}% ⚡",
-    "format-plugged": "{capacity}% ",
-    "format-alt": "{time} {icon}",
-    "format-icons": ["", "", "", "", ""]
-  },
-  "network": {
-    // "interface": "wlp2*", // (Optional) To force the use of this interface
-    "format-wifi": "{essid} ({signalStrength}%) ",
-    "format-ethernet": "{ipaddr}/{cidr}",
-    "tooltip-format": "{ifname} via {gwaddr}",
-    "format-linked": "{ifname} (No IP)",
-    "format-disconnected": "Disconnected ⚠",
-    "format-alt": "{ifname}: {ipaddr}/{cidr}"
-  },
-  "pulseaudio": {
-    "scroll-step": 1, // %, can be a float
-    "format": "{volume}% {icon} {format_source}",
-    "format-bluetooth": "{volume}% {icon}  {format_source}",
-    "format-bluetooth-muted": " {icon}  {format_source}",
-    "format-muted": "Mute {format_source}",
-    "format-source": "{volume}% ",
-    "format-source-muted": "",
-    "format-icons": {
-      "headphone": "",
-      "hands-free": "F",
-      "headset": "S",
-      "phone": "",
-      "portable": "",
-      "car": "",
-      "default": ["", "", ""]
+    "ext/workspaces": {
+        "all-outputs": false,
+        "format": "{name}",
+        "sort-by-name": true,
+        "on-click": "activate",
+        "active-only": false,
+        "on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({workspace=\"e-1\"})' ",
+        "on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({workspace=\"e+1\"})' "
     },
-    "on-click": "pavucontrol"
-  },
-
-  "custom/notification": {
-    "tooltip": true,
-    "format": "<span size='13pt'>{icon} {0}</span>",
-    // "format": "{icon} {0}",
-    "format-icons": {
-      "notification": "󱅫",
-      "none": "󰂜",
-      "dnd-notification": "󰂠",
-      "dnd-none": "󰪓",
-      "inhibited-notification": "󰂛",
-      "inhibited-none": "󰪑",
-      "dnd-inhibited-notification": "󰂛",
-      "dnd-inhibited-none": "󰪑"
+    "hyprland/workspaces": {
+        "all-outputs": false,
+        "format": "{name}",
+        "enable-bar-scroll": true,
+        "on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({workspace=\"e+1\"})' ",
+        "on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({workspace=\"e-1\"})' "
     },
-    "return-type": "json",
-    "exec-if": "which swaync-client",
-    "exec": "swaync-client -swb",
-    "on-click": "swaync-client -t -sw",
-    "on-click-right": "swaync-client -d -sw",
-    "escape": true
-  }
+
+    "hyprland/window": {
+        "format": "👉 {}",
+        // "separate-outputs": false
+        // "max-length": 200,
+        "separate-outputs": true
+    },
+    "tray": {
+        // "icon-size": 21,
+        "spacing": 10
+    },
+    "clock": {
+        "format": "{:%Y-%m-%d %H:%M 星期 %w }",
+        "interval": 1
+    },
+    "backlight": {
+        // "device": "acpi_video1",
+        "format": "{percent}% {icon}",
+        "format-icons": ["", "", "", "", "", "", "", "", ""]
+    },
+    "battery": {
+        "interval": 30,
+        "format": "{capacity}% {icon}",
+        "format-charging": "{capacity}% ⚡",
+        "format-plugged": "{capacity}% ",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "network": {
+        // "interface": "wlp2*", // (Optional) To force the use of this interface
+        "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-ethernet": "{ipaddr}/{cidr}",
+        "tooltip-format": "{ifname} via {gwaddr}",
+        "format-linked": "{ifname} (No IP)",
+        "format-disconnected": "Disconnected ⚠",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}"
+    },
+    "pulseaudio": {
+        "scroll-step": 1, // %, can be a float
+        "format": "{volume}% {icon} {format_source}",
+        "format-bluetooth": "{volume}% {icon}  {format_source}",
+        "format-bluetooth-muted": " {icon}  {format_source}",
+        "format-muted": "Mute {format_source}",
+        "format-source": "{volume}% ",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "F",
+            "headset": "S",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+
+    "custom/notification": {
+        "tooltip": true,
+        "format": "<span size='13pt'>{icon} {0}</span>",
+        // "format": "{icon} {0}",
+        "format-icons": {
+            "notification": "󱅫",
+            "none": "󰂜",
+            "dnd-notification": "󰂠",
+            "dnd-none": "󰪓",
+            "inhibited-notification": "󰂛",
+            "inhibited-none": "󰪑",
+            "dnd-inhibited-notification": "󰂛",
+            "dnd-inhibited-none": "󰪑"
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
+    }
 }
