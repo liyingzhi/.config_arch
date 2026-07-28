@@ -9,9 +9,9 @@ local filemanager  = "thunar" -- dplphin, thunar
 
 local function focus_or_raise(process, class, command)
     return string.format(
-        -- [[pgrep %s && hyprctl dispatch 'hl.dsp.focus({ window = "class:%s" })' || %s]],
-        [[hyprctl clients -j | jq -e '.[] | select(.class == "%s")' && hyprctl dispatch 'hl.dsp.focus({ window = "class:%s" })' || %s]],
-        process,
+        -- [[pgrep -i %s && hyprctl dispatch 'hl.dsp.focus({ window = "class:%s" })' || %s]],
+        [[hyprctl clients -j | jq -e '.[] | select(.class | ascii_downcase == "%s")' && hyprctl dispatch 'hl.dsp.focus({ window = "class:%s" })' || %s]],
+        string.lower(process),
         class,
         command)
 end
@@ -23,7 +23,7 @@ hl.bind(sub1Mod .. " + CTRL + Q",         hl.dsp.exec_cmd("command -v hyprshutdo
 hl.bind(mainMod .. " + SPACE",         hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + CTRL + E",      hl.dsp.exec_cmd(focus_or_raise("emacs", "Emacs", "emacs")))
 hl.bind(mainMod .. " + CTRL + S",      hl.dsp.exec_cmd(focus_or_raise("localsend", "localsend", "localsend")))
-hl.bind(mainMod .. " + CTRL + I",      hl.dsp.exec_cmd(focus_or_raise("igcemacs", "Emacs", "igcemacs")))
+hl.bind(mainMod .. " + CTRL + I",      hl.dsp.exec_cmd(focus_or_raise("emacs", "Emacs", "igcemacs")))
 hl.bind(mainMod .. " + CTRL + K",      hl.dsp.exec_cmd(focus_or_raise(terminal, terminal, terminal)))
 hl.bind(mainMod .. " + CTRL + T",      hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + CTRL + F",      hl.dsp.exec_cmd(focus_or_raise(browser, browser, browser)))
