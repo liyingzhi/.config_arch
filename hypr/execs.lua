@@ -29,7 +29,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("swaync")
 
 	-- udiskie Automounter for removable media
-	hl.exec_cmd("udiskie")
+	hl.exec_cmd("udiskie --tray")
 
 	-- flameshot screen shotter
 	hl.exec_cmd("flameshot")
