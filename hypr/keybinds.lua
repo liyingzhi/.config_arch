@@ -55,7 +55,14 @@ hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("clipvault list | rofi -dmenu -displa
 -- Cycle through windows in the current workspace
 -- hl.bind(mainMod .. " + GRAVE", hl.dsp.window.cycle_next())
 hl.bind(mainMod .. " + GRAVE", hl.dsp.focus({ workspace = "e+1" }))
-hl.bind(mainMod .. " + TAB", hl.dsp.focus({ last = true }))
+-- hl.bind(mainMod .. " + TAB", hl.dsp.focus({ last = true }))
+hl.bind(
+	mainMod .. " + TAB",
+	hl.dsp.exec_cmd([[hyprctl -j workspaces | jq -e 'length >= 3' >/dev/null 2>&1 &&
+hyprctl dispatch 'hl.dsp.focus({ last = true })' >/dev/null 2>&1 ||
+hyprctl dispatch 'hl.dsp.focus({ workspace = "e+1" })']])
+)
+
 -- Cycle through windows in the current workspace
 hl.bind(mainMod .. " + J", hl.dsp.window.cycle_next())
 hl.bind(sub1Mod .. " + J", hl.dsp.window.cycle_next())
