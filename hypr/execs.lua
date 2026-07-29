@@ -19,15 +19,26 @@ hl.on("hyprland.start", function()
 	-- Clipboard (use clipcatd)
 	-- hl.exec_cmd("clipcatd")
 
-	-- Bluetooth, notification
+	-- Bluetooth, network management, caffeine indicator
 	-- hl.exec_cmd("blueman-tray")
-	hl.exec_cmd("flameshot")
 	hl.exec_cmd("blueman-applet")
 	hl.exec_cmd("nm-applet")
+	hl.exec_cmd("caffeine-indicator")
+
+	-- swaync notification center
 	hl.exec_cmd("swaync")
+
+	-- udiskie Automounter for removable media
+	hl.exec_cmd("udiskie")
+
+	-- flameshot screen shotter
+	hl.exec_cmd("flameshot")
 
 	-- deskflow share keyboard and mouse
 	hl.exec_cmd("deskflow")
+
+	-- syncthing between local network devices
+	hl.exec_cmd("syncthing")
 
 	-- hl.exec_cmd("browserpass")
 end)
