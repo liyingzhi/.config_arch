@@ -193,6 +193,7 @@ window#waybar.hidden {
 #tray {
 	margin-top: 6px;
 	margin-left: 2px;
+    margin-right: 5px;
 	padding-left: 10px;
 	padding-right: 10px;
 	margin-bottom: 0px;
