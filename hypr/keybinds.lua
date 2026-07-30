@@ -1,6 +1,7 @@
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
-local menu     = "rofi -show combi -combi-modes window,drun,run,filebrowser -modes combi"
+local menu     = "rofi -show combi -combi-modes drun,run,filebrowser -modes combi"
+local window_menu     = "rofi -show combi -combi-modes window"
 local terminal = "kitty"
 local browser  = "firefox"
 local filemanager  = "thunar" -- dplphin, thunar
@@ -19,6 +20,7 @@ hl.bind(mainMod .. " + E",              hl.dsp.exec_cmd(filemanager))
 hl.bind(mainMod .. " + SHIFT + T",      hl.dsp.exec_cmd(terminal .. " btop"))
 
 -- Window management
+hl.bind(mainMod .. " + W",         hl.dsp.exec_cmd(window_menu))
 hl.bind(mainMod .. " + SHIFT + C", hl.dsp.window.close())
 hl.bind(mainMod .. " + S",         hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + F",         hl.dsp.window.fullscreen())
@@ -34,7 +36,7 @@ hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("clipvault list | rofi -dmenu -displa
 -- Cycle focus
 hl.bind(mainMod .. " + K",   hl.dsp.window.cycle_next({ next = false }))
 hl.bind(mainMod .. " + J",   hl.dsp.window.cycle_next())
-hl.bind(mainMod .. " + TAB", hl.dsp.focus({ last = true}))
+hl.bind(mainMod .. " + TAB", hl.dsp.focus({workspace = "e+1"}))
 
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT/CTRL + [0-9]
