@@ -37,9 +37,9 @@
     },
 
     "hyprland/window": {
-        "format": "👉 {}",
+        "format": "👉 {class}",
         // "separate-outputs": false
-        // "max-length": 200,
+        // "max-length": 25,
         "separate-outputs": true
     },
     "tray": {
