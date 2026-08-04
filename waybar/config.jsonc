@@ -50,7 +50,26 @@
         "interval": 1,
         "format": "{:%Y-%m-%d %H:%M}",
         "format-alt": "{:%Y-%m-%d %H:%M:%S 星期 %w }",
-        "tooltip": false
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "month",
+            "mode-mon-col": 3,
+            "weeks-pos": "right",
+            "first-day-of-week": 1,
+            "format": {
+                "months": "<span color='#ffead3'><b>{}</b></span>",
+                "days": "<span color='#ecc6d9'><b>{}</b></span>",
+                "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+                "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+                "today": "<span bgcolor='#ff3366' color='#1a1a2e'><b>{}</b></span>"
+                // "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+            }
+        },
+        "actions": {
+            "on-click-right": "mode",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        }
     },
     "backlight": {
         // "device": "acpi_video1",

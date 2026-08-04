@@ -8,7 +8,7 @@ hl.on("hyprland.start", function()
 	-- wallpaper, Bar
 	-- hl.exec_cmd("~/.config/hypr/scripts/background-video.sh")
 	hl.exec_cmd("hyprpaper")
-	hl.exec_cmd("waybar")
+	hl.exec_cmd("env LC_TIME=zh_CN.UTF-8 waybar")
 
 	-- Input method
 	hl.exec_cmd("fcitx5 --replace -d")
