@@ -1,5 +1,15 @@
 {
     "layer": "top",
+
+    // control which monitor to show this waybar
+    // "output": "DP-2",
+
+    // use different waybar configuration contents for different monitor bars show
+    // for DP-2 monitor
+    // waybar -c /home/ii/.config/waybar/config.jsonc -s /home/ii/.config/waybar/style.css
+    // for DP-1 monitor
+    // waybar -c /home/ii/.config/waybar/config1.jsonc -s /home/ii/.config/waybar/style1.css
+
     "position": "top",
     "spacing": 1,
     "height": 30,
