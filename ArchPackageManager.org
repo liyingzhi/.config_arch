@@ -1,0 +1,536 @@
+* 使用表格维护 ROI 软件包出发点，需求来源
+- 参考：[[https://kyo.iroiro.party/en/posts/emacs-maintains-my-arch/]]
+- 我用 # 标记正在尝试的软件包，如果它们没有给我留下深刻印象，或者现有的软件包足够令人满意，我就会删除它们。
+- 偶尔，当我运行 pacman -Syu 更新软件包时，我会浏览一下软件包列表，对那些我未知的软件包运行 pacman -Qi ，然后将明确安装的软件包添加到此表中。
+| Package | Type   | Reason                         |
+|---------+--------+--------------------------------|
+| figlet  | (app)  | Print big letters in terminals |
+| toilet  | (app#) | See ~figlet~                     |
+* diff 系统中已经安装的软件包 vs ROI 软件包 + ROI group 中的软件包
+Then, once in a while I would look at this new table, find something that looks interesting to me, research it, and put it into the installed table.
+After a long while, I finally got every explicitly installed package covered.
+
+Having to sync by C-c C-c after (un)installing packages seems annoying, so I went further ahead and added a new babel block for installing packages from the Orgmode note file.
+** Sync between the table and real installed packages by pacman or yay package manager
+对于本地包来说，通过 yay 安装的 aur 包也可以通过 ~pacman -Qeq~ 查询到。
+#+begin_src elisp :var packages=installed :var group-table=installed-groups :results table
+  ;; 对于本地包来说，通过 yay 安装的 aur 包也可以通过 ~pacman -Qeq~ 查询到。
+  ;; 这个管理思想的思路是在 installed 表格中的都是自己精心维护的包，都是需要有原因的
+  (let* ((with-reasons (mapcar #'car packages))
+         (groups (mapcar #'car group-table))
+         (with-reasons-set (make-hash-table :size (length with-reasons) :test 'equal))
+         (upstream (split-string (shell-command-to-string "pacman -Qeq")))
+         (upstream-set (make-hash-table :size (length upstream) :test 'equal)))
+    ;;设置 with-reasons-set 已安装表格 [[installed]]中的软件 entry
+    ;;将 with-reasons-set hash 表格中元素 key 分别为全部安装表格中集合元素, 值为 t
+    ;;表格中每行 key 是 [[installed] 表格中每行第一列元素
+    (dolist (p with-reasons) (puthash p t with-reasons-set))
+    ;; 已安装，但是没在已安装表格中的软件包列表
+    ;; 不是通过这个 org 中的流程 workflow 进行安装，没有记录在 [[installed] 表格中
+    (setq mine-tmp-upstream (seq-filter (lambda (p) (not (gethash p with-reasons-set))) upstream))
+    ;; 将 upstream-set 表格中全部 key entry 置 t;
+    ;; key 分别为全部已安装软件包集合元素
+    ;; 表格中每个 key 是安装软件的名称
+    (dolist (p upstream) (puthash p t upstream-set))
+
+    ;; “软件包组”（Package Group）是 Arch Linux 的包管理器 pacman 中一个非常核心且实用的概念。
+    ;; 简单来说，软件包组就是把一堆功能相近、为了完成某个共同任务而相互依赖的软件包，打包成了一个“合集”。
+    ;; pacman -Qgq 命令用于以简洁的、机器可读的格式，列出系统中所有已安装的软件包组的名称
+
+    ;; 遍历安装组, 安装组代表软件的类别
+    ;; 比如，通过下列语句查询 fcitx5-im 组别，当前安装了哪些软件包
+    ;; pacman -Qgq  fcitx5-im
+    ;; fcitx5
+    ;; fcitx5-configtool
+    ;; fcitx5-gtk
+    ;; fcitx5-qt
+    (dolist (g groups)
+      ;; 获取当前查询的安装组 entry 对应的软件包集合
+      (let ((gpackages (split-string (shell-command-to-string (concat "pacman -Qgq " g)))))
+
+        (dolist (p gpackages)
+          ;; 如果当前组中当前软件包已经安装，将 upstream-set 哈希表中对应 entry 删除，也就是只要在 ROI group 中的软件已经安装，就认为没有安装
+          ;; 如果当前组中当前软件包未安装，将在 with-reasons-set 哈希表中插入当前组软件包名称 entry
+          (if (gethash p upstream-set)
+              ;; fixme: 为什么删除在 ROI 组中，已将安装在系统中的软件包元素？
+
+              ;; 在 [[install-group]] table 表格中通过 group 组管理的软件包中包含的子组件，认为是通过“软件包组”安装的整个包的组件,
+              ;; 即使出现在 upstream-set 查询中，而没有在 [[installed]] table 表格中维护这个软件包，也不作为潜在删除的包,
+              ;; 或者理论上来说，属于 [[install-group]] table 表格表格范围的子包，都 (一定) 不应在 [[installed]] 表格中出现
+
+              ;; 靠 [[install-group]] table 表格，管理安装的软件包，不用 upstream-set 统计管理
+              ;; 因为某个包安装了，就属于 [[install-group]] table 表格管理组包的子包了，不需要 [[installed]] table 表格管理与维护
+              (remhash p upstream-set)
+            (puthash p t with-reasons-set))
+
+          ;; (unless (gethash p upstream-set)
+          ;;   (puthash p t with-reasons-set))
+          )))
+
+                                          ;
+    (append '(("" "Potentially Removed Packages:"))
+            ;; ANCHOR:【预示】：在 [installed] table 表格中的行是不是要删除
+            (mapcar (lambda (p) (list p "" "" ""))
+                    ;; upstream-set 为已安装集合排除 ROI group 中软件包后的剩余集合哈希表
+                    ;; with-reasons 为 ROI 安装列表中的软件包列表,并且包含在 ROI group 但没有实际安装的软件套件组
+                    (seq-filter (lambda (p) (not (gethash p upstream-set))) with-reasons))
+            '(("" "Newly Installed Packages:"))
+            ;; ANCHOR:【预示】：判断是不是要将安装了但是没有记录的软件添加维护到 [installed] table 表格中
+            (mapcar (lambda (p) (list p "" "" ""))
+                    ;; 在下面排除后的已安装软件包中，筛选出不在 ROI 安装软件包列表中的部分，认为作为新安装的但没统计到 ROI 安装表格中的元素
+                    (seq-filter (lambda (p) (not (gethash p with-reasons-set)))
+                                ;; upstream-set 为已安装集合排除 ROI group 中软件包后的剩余集合哈希表
+                                ;; upstream 为已安装在系统中的软件包列表
+                                ;; 从在系统中已安装的软件列表中删除属于 ROI group 的软件包
+                                (seq-filter (lambda (p) (gethash p upstream-set)) upstream)))))
+#+end_src
+** Generate a table which shows real installed packages by pacman or yay package manager
+#+begin_src emacs-lisp :results table :eval yes
+  (let ((upstream (split-string (shell-command-to-string "pacman -Qeq"))))
+    (mapcar (lambda (p) (list p "" "" ""))
+            upstream))
+#+end_src
+* Install arch packages via org
+Similarly, when installing a package from Org-mode, we prompt for the package name (or package names, with completing-read-multiple), use ~org-link-open-from-string~ to jump to our installed table, update it, jump back, and emit an extra babel block for the user to execute, which actually installs things with pacman.
+** pacman
+Install packages via Org-mode
+我们将从 pacman 读取所有软件包，并使用 completing-reading 提示用户（也就是我）输入软件包名称。
+#+begin_src emacs-lisp :var packages=installed :wrap src elisp :eval yes
+  (let* ((upstream (split-string (shell-command-to-string "pacman -Slq")))
+         (pkg-string (completing-read-multiple "Package(s) to install: " upstream))
+         (pkgs (read (concat "(" (string-join pkg-string " ") ")")))
+                                          ;(cdr packages): 过滤掉 packages 表格中第一行数据
+                                          ;cadr: 取第二列数据
+                                          ;seq-filter: 过滤掉 type 列表中空或包含#的 entry 项
+         (reasons (seq-filter
+                   (lambda (s) (and (not (string-blank-p s))
+                                    (not (string-match-p "#" s))))
+                   (seq-uniq (mapcar #'cadr (cdr packages)))))
+         (reason (completing-read "Category: " reasons))
+         (reason (if (yes-or-no-p "Temporary? ")
+                     (concat (string-trim-right reason ")") "#)")
+                   reason))
+         (note (read-string "Notes for the package(s): ")))
+    (save-excursion
+      (org-link-open-from-string "[[installed]]")
+      (forward-line)
+      (goto-char (org-table-end))
+      (insert
+       (mapconcat
+        (lambda (pkg) (format "| %s | %s | %s | |\n" pkg reason note))
+        pkgs))
+      (org-table-align))
+    (prin1-to-string (list 'term (format "sudo pacman -S %s" (mapconcat #'symbol-name pkgs " ")))))
+#+end_src
+** yay
+Install packages via Org-mode
+我们将从 pacman 读取所有软件包，并使用 completing-reading 提示用户（也就是我）输入软件包名称。
+#+begin_src emacs-lisp :var packages=installed :wrap src elisp :eval yes
+  (let* ((upstream (split-string (shell-command-to-string "yay -Slq")))
+         (pkg-string (completing-read-multiple "Package(s) to install: " upstream))
+         (pkgs (read (concat "(" (string-join pkg-string " ") ")")))
+         (reasons (seq-filter
+                   (lambda (s) (and (not (string-blank-p s))
+                                    (not (string-match-p "#" s))))
+                   (seq-uniq (mapcar #'cadr (cdr packages)))))
+         (reason (completing-read "Category: " reasons))
+         (reason (if (yes-or-no-p "Temporary? ")
+                     (concat (string-trim-right reason ")") "#)")
+                   reason))
+         (note (read-string "Notes for the package(s): ")))
+    (save-excursion
+      (org-link-open-from-string "[[installed]]")
+      (forward-line)
+      (goto-char (org-table-end))
+      (insert
+       (mapconcat
+        (lambda (pkg) (format "| %s | %s | %s | |\n" pkg reason note))
+        pkgs))
+      (org-table-align))
+    (prin1-to-string (list 'term (format "yay -S %s" (mapconcat #'symbol-name pkgs " ")))))
+#+end_src
+** [installed]                                                     :tb:install:
+#+name: installed
+| Package                     | Type           | Reason                                                                                 |   |
+|-----------------------------+----------------+----------------------------------------------------------------------------------------+---|
+| base-devel                  | (base)         | You need this                                                                          |   |
+| zotero                      | (app)          | paper manager tool                                                                     |   |
+| bluetui                     | (app)          | blue manager with tui                                                                  |   |
+| fcitx5                      | (input-method) | input method framework                                                                 |   |
+| yt-dlp                      | (app)          | A feature-rich command-line audio/video downloader.                                    |   |
+| python-edge-tts             | (reader#)      | text to speech.                                                                        |   |
+| nsxiv                       | (app)          | Neo Simple X Image Viewer                                                              |   |
+| lxappearance                | (app)          | LXDE GTK+ theme switcher. It's a desktop-independent theme switcher for GTK+.          |   |
+| tree                        | (tool#)        | tree file struct.                                                                      |   |
+| hyprland                    | (wm#)          | hyprland window manager.                                                               |   |
+| hyprpaper                   | (wm#)          | hyprland desktop paper.                                                                |   |
+| hyprshot                    | (wm#)          | hyprland screen shot.                                                                  |   |
+| xdg-desktop-portal-hyprland | (wm#)          | An XDG Desktop Portal lets applications communicate with the compositor through D-Bus. |   |
+| waybar                      | (wm#)          | Highly customizable Wayland bar for Sway and Wlroots based compositors.                |   |
+| swaync                      | (wm#)          | A simple GTK based notification daemon for Sway.                                       |   |
+| pacman-contrib              | (pm#)          | Contributed scripts and tools for pacman systems pacman scripts.                       |   |
+| copyq                       | (tool#)        | Clipboard manager with advanced features.                                              |   |
+| mpvpaper                    | (DM#)          | dynamic paper.                                                                         |   |
+| sdcv                        | (dict)         | offline dictionary.                                                                    |   |
+| zoxide                      | (tools)        | A smarter cd command.                                                                  |   |
+| dtach                       | (tools)        | dtach for detached                                                                     |   |
+| hfdownloader                | (tools)        | huggingface model downloader                                                           |   |
+| nvitop                      | (tools)        | nvidia visuation                                                                       |   |
+| pdftk                       | (tools)        | friendly graphical tool for quickly merging and splitting PDF documents and pages.     |   |
+** [install-group]                                                   :tb:group:
+#+name: installed-groups
+| Package     | Type   | Reason |
+|-------------+--------+--------|
+| texlive     | (app)  |        |
+| fcitx5-im   | (cjk)  | IME    |
+| linux-tools | (base) |        |
+| xorg        |        |        |
+| xorg-app    |        |        |
+
+** test: 通过补全选择安装软件包测试函数
+#+begin_src emacs-lisp :var packages=installed
+  (let* ((upstream (split-string (shell-command-to-string "pacman -Slq")))
+         (install-package-ids (seq-uniq (mapcar #'cadr (cdr packages))))
+         (reasons (seq-filter
+                   (lambda (s) (and (not (string-blank-p s))
+                                    (not (string-match-p "#" s))))
+                   install-package-ids
+                   )))
+
+    (message "%s\n%s\n%s" (cdr packages) install-package-ids reasons))
+#+end_src
+
+#+begin_src emacs-lisp
+  (let* ((upstream (split-string (shell-command-to-string "pacman -Slq")))
+         (pkg (completing-read "Package: " upstream)))
+    (term (concat "pacman -Si " pkg)))
+#+end_src
+
+#+begin_src elisp :var packages=installed :wrap src bash
+  (let* ((upstream (split-string (shell-command-to-string "pacman -Slq")))
+         (package (completing-read "What to install: " upstream)))
+    (prin1-to-string (list 'term (format "sudo pacman -S %s" package))))
+#+end_src
+
+* Uninstall arch packages via org
+** pacman
+#+begin_src emacs-lisp :var packages=installed :wrap src elisp :eval yes
+  (let* ((packages (if (yes-or-no-p "Temporary? ")
+                       (seq-filter (lambda (pkg) (string-match-p "#" (cadr pkg))) packages)
+                     packages))
+         (pkgs (mapcar #'car packages))
+         (pkg (completing-read "Package to remove: " pkgs)))
+    (save-excursion
+      (org-link-open-from-string "[[installed]]")
+      (re-search-forward (format "^|[ \t]*%s[ \t]*|" (regexp-quote pkg)))
+      (let ((line (buffer-substring (pos-bol) (pos-bol 2))))
+        (save-excursion
+          (org-link-open-from-string "[[uninstalled]]")
+          (forward-line)
+          (goto-char (org-table-end))
+          (insert line)
+          (org-table-align))
+        (delete-line)))
+    ;; (prin1-to-string (list 'term (format "sudo pacman -Rs %s" pkg)))
+    (prin1-to-string (list 'term (format "sudo pacman -Rs %s" pkg))))
+#+end_src
+** yay
+#+begin_src emacs-lisp :var packages=installed :wrap src elisp :eval yes
+  (let* ((packages (if (yes-or-no-p "Temporary? ")
+                       (seq-filter (lambda (pkg) (string-match-p "#" (cadr pkg))) packages)
+                     packages))
+         (pkgs (mapcar #'car packages))
+         (pkg (completing-read "Package to remove: " pkgs)))
+    (save-excursion
+      (org-link-open-from-string "[[installed]]")
+      (re-search-forward (format "^|[ \t]*%s[ \t]*|" (regexp-quote pkg)))
+      (let ((line (buffer-substring (pos-bol) (pos-bol 2))))
+        (save-excursion
+          (org-link-open-from-string "[[uninstalled]]")
+          (forward-line)
+          (goto-char (org-table-end))
+          (insert line)
+          (org-table-align))
+        (delete-line)))
+    ;; (prin1-to-string (list 'term (format "yay -Rns %s" pkg)))
+    (prin1-to-string (list 'term (format "yay -Rs %s" pkg))))
+#+end_src
+** [uninstalled]                                                 :tb:uninstall:
+#+name: uninstalled
+| Package         | Type            | Reason           |   |
+|-----------------+-----------------+------------------+---|
+| grim            | (app)           | screenshot tool. |   |
+| taskwarrior-tui | (task-manager#) | task manager.    |   |
+* 安装列表备份
+** [installed-backup]
+#+name: installed-backup
+| Package                         | Type | Reason |   |
+|---------------------------------+------+--------+---|
+| 7zip                            |      |        |   |
+| acpi                            |      |        |   |
+| adobe-source-han-serif-cn-fonts |      |        |   |
+| alacritty                       |      |        |   |
+| archlinux-keyring               |      |        |   |
+| archlinuxcn-keyring             |      |        |   |
+| aspell                          |      |        |   |
+| aspell-en                       |      |        |   |
+| audiorelay                      |      |        |   |
+| base                            |      |        |   |
+| base-devel                      |      |        |   |
+| basedpyright-bin                |      |        |   |
+| bat                             |      |        |   |
+| beancount                       |      |        |   |
+| blueman                         |      |        |   |
+| bluetui                         |      |        |   |
+| bluez                           |      |        |   |
+| bluez-deprecated-tools          |      |        |   |
+| bluez-utils                     |      |        |   |
+| breeze-icons                    |      |        |   |
+| bspwm                           |      |        |   |
+| btop                            |      |        |   |
+| btrfs-progs                     |      |        |   |
+| caffeine                        |      |        |   |
+| capitaine-cursors               |      |        |   |
+| clang                           |      |        |   |
+| clash-verge-rev-bin             |      |        |   |
+| claude-code                     |      |        |   |
+| clipcat                         |      |        |   |
+| clipvault                       |      |        |   |
+| cloc                            |      |        |   |
+| cmake                           |      |        |   |
+| copyq                           |      |        |   |
+| cowsay                          |      |        |   |
+| ctags                           |      |        |   |
+| cudnn                           |      |        |   |
+| deskflow                        |      |        |   |
+| difftastic-git                  |      |        |   |
+| direnv                          |      |        |   |
+| djvulibre                       |      |        |   |
+| docker                          |      |        |   |
+| docker-compose                  |      |        |   |
+| doxygen                         |      |        |   |
+| dpkg                            |      |        |   |
+| dtach                           |      |        |   |
+| duf                             |      |        |   |
+| dunst                           |      |        |   |
+| dust                            |      |        |   |
+| dysk                            |      |        |   |
+| efibootmgr                      |      |        |   |
+| eza                             |      |        |   |
+| fastfetch                       |      |        |   |
+| fava                            |      |        |   |
+| fcitx5                          |      |        |   |
+| fcitx5-chinese-addons           |      |        |   |
+| fcitx5-configtool               |      |        |   |
+| fcitx5-gtk                      |      |        |   |
+| fcitx5-rime                     |      |        |   |
+| fcitx5-skin-adwaita-dark        |      |        |   |
+| fd                              |      |        |   |
+| feh                             |      |        |   |
+| firefox                         |      |        |   |
+| flameshot                       |      |        |   |
+| fltk                            |      |        |   |
+| freefilesync                    |      |        |   |
+| fzf                             |      |        |   |
+| garcon                          |      |        |   |
+| gdb                             |      |        |   |
+| git                             |      |        |   |
+| git-delta                       |      |        |   |
+| git-lfs                         |      |        |   |
+| github-cli                      |      |        |   |
+| global                          |      |        |   |
+| gperf                           |      |        |   |
+| graphviz                        |      |        |   |
+| grub                            |      |        |   |
+| gvfs                            |      |        |   |
+| harmonymusic                    |      |        |   |
+| hugo                            |      |        |   |
+| hunspell                        |      |        |   |
+| hyprland                        |      |        |   |
+| hyprpaper                       |      |        |   |
+| hyprshot                        |      |        |   |
+| hyprshutdown                    |      |        |   |
+| i3lock                          |      |        |   |
+| imagemagick                     |      |        |   |
+| intel-ucode                     |      |        |   |
+| isync                           |      |        |   |
+| kitty                           |      |        |   |
+| lazycat-terminal                |      |        |   |
+| lazydocker                      |      |        |   |
+| lib32-nvidia-580xx-utils        |      |        |   |
+| libgccjit                       |      |        |   |
+| libreoffice-fresh               |      |        |   |
+| libvips                         |      |        |   |
+| linux                           |      |        |   |
+| linux-firmware                  |      |        |   |
+| linux-headers                   |      |        |   |
+| linuxqq-nt-bwrap                |      |        |   |
+| llama.cpp                       |      |        |   |
+| localsend                       |      |        |   |
+| lxappearance                    |      |        |   |
+| maim                            |      |        |   |
+| mesa-utils                      |      |        |   |
+| mpv                             |      |        |   |
+| mpvpaper                        |      |        |   |
+| msmtp                           |      |        |   |
+| mu                              |      |        |   |
+| mupdf                           |      |        |   |
+| network-manager-applet          |      |        |   |
+| networkmanager                  |      |        |   |
+| nomachine                       |      |        |   |
+| noto-fonts                      |      |        |   |
+| noto-fonts-cjk                  |      |        |   |
+| noto-fonts-emoji                |      |        |   |
+| noto-fonts-extra                |      |        |   |
+| npm                             |      |        |   |
+| nsxiv                           |      |        |   |
+| ntfs-3g                         |      |        |   |
+| nvidia-580xx-dkms               |      |        |   |
+| nvidia-580xx-settings           |      |        |   |
+| nvidia-container-toolkit        |      |        |   |
+| nvidia-prime                    |      |        |   |
+| nvitop                          |      |        |   |
+| onedrive-abraunegg              |      |        |   |
+| open                            |      |        |   |
+| os-prober                       |      |        |   |
+| pacman-contrib                  |      |        |   |
+| pandoc-bin                      |      |        |   |
+| pass                            |      |        |   |
+| pavucontrol                     |      |        |   |
+| pdftk                           |      |        |   |
+| perl-file-homedir               |      |        |   |
+| perl-yaml-tiny                  |      |        |   |
+| picom                           |      |        |   |
+| plantuml                        |      |        |   |
+| plotjuggler                     |      |        |   |
+| pnpm                            |      |        |   |
+| polybar                         |      |        |   |
+| prettier                        |      |        |   |
+| pulseaudio                      |      |        |   |
+| pulseaudio-bluetooth            |      |        |   |
+| python-edge-tts                 |      |        |   |
+| rime-wanxiang-updater           |      |        |   |
+| ripgrep                         |      |        |   |
+| ripgrep-all                     |      |        |   |
+| rofi                            |      |        |   |
+| rsync                           |      |        |   |
+| ruff                            |      |        |   |
+| rustup                          |      |        |   |
+| sdcv                            |      |        |   |
+| sioyek                          |      |        |   |
+| skim                            |      |        |   |
+| slock                           |      |        |   |
+| stow                            |      |        |   |
+| stylua                          |      |        |   |
+| swaync                          |      |        |   |
+| sxhkd                           |      |        |   |
+| syncthing                       |      |        |   |
+| systemctl-tui                   |      |        |   |
+| texlive-full                    |      |        |   |
+| tgs2png-git                     |      |        |   |
+| thunar                          |      |        |   |
+| thunar-volman                   |      |        |   |
+| tigervnc                        |      |        |   |
+| tk                              |      |        |   |
+| tokei                           |      |        |   |
+| translate-shell                 |      |        |   |
+| tree                            |      |        |   |
+| tree-sitter                     |      |        |   |
+| tssh                            |      |        |   |
+| ttf-aporetic                    |      |        |   |
+| ttf-firacode-nerd               |      |        |   |
+| ttf-jetbrains-mono              |      |        |   |
+| ttf-jigmo                       |      |        |   |
+| ttf-lxgw-neo-xihei              |      |        |   |
+| ttf-lxgw-neo-xihei-screen-full  |      |        |   |
+| ttf-lxgw-wenkai                 |      |        |   |
+| ttf-lxgw-wenkai-screen          |      |        |   |
+| ttf-nerd-fonts-symbols          |      |        |   |
+| ttf-nerd-fonts-symbols-mono     |      |        |   |
+| ttf-symbola                     |      |        |   |
+| tumbler                         |      |        |   |
+| typst                           |      |        |   |
+| udiskie                         |      |        |   |
+| unzip                           |      |        |   |
+| uv                              |      |        |   |
+| vim                             |      |        |   |
+| vorbis-tools                    |      |        |   |
+| watchexec                       |      |        |   |
+| waybar                          |      |        |   |
+| wechat-universal-bwrap          |      |        |   |
+| wget                            |      |        |   |
+| wmctrl                          |      |        |   |
+| words                           |      |        |   |
+| wqy-microhei                    |      |        |   |
+| wqy-zenhei                      |      |        |   |
+| xclip                           |      |        |   |
+| xcursor-themes                  |      |        |   |
+| xdg-desktop-portal              |      |        |   |
+| xdg-desktop-portal-hyprland     |      |        |   |
+| xdg-user-dirs                   |      |        |   |
+| xdotool                         |      |        |   |
+| xf86-video-vesa                 |      |        |   |
+| xfce4-appfinder                 |      |        |   |
+| xfce4-power-manager             |      |        |   |
+| xfce4-session                   |      |        |   |
+| xfce4-settings                  |      |        |   |
+| xfce4-terminal                  |      |        |   |
+| xfdesktop                       |      |        |   |
+| xfwm4                           |      |        |   |
+| xorg-bdftopcf                   |      |        |   |
+| xorg-docs                       |      |        |   |
+| xorg-font-util                  |      |        |   |
+| xorg-fonts-100dpi               |      |        |   |
+| xorg-fonts-75dpi                |      |        |   |
+| xorg-fonts-encodings            |      |        |   |
+| xorg-iceauth                    |      |        |   |
+| xorg-mkfontscale                |      |        |   |
+| xorg-server                     |      |        |   |
+| xorg-server-common              |      |        |   |
+| xorg-server-devel               |      |        |   |
+| xorg-server-xephyr              |      |        |   |
+| xorg-server-xnest               |      |        |   |
+| xorg-server-xvfb                |      |        |   |
+| xorg-sessreg                    |      |        |   |
+| xorg-setxkbmap                  |      |        |   |
+| xorg-smproxy                    |      |        |   |
+| xorg-x11perf                    |      |        |   |
+| xorg-xauth                      |      |        |   |
+| xorg-xbacklight                 |      |        |   |
+| xorg-xcmsdb                     |      |        |   |
+| xorg-xcursorgen                 |      |        |   |
+| xorg-xdpyinfo                   |      |        |   |
+| xorg-xdriinfo                   |      |        |   |
+| xorg-xev                        |      |        |   |
+| xorg-xgamma                     |      |        |   |
+| xorg-xhost                      |      |        |   |
+| xorg-xinit                      |      |        |   |
+| xorg-xinput                     |      |        |   |
+| xorg-xkbcomp                    |      |        |   |
+| xorg-xkbevd                     |      |        |   |
+| xorg-xkbutils                   |      |        |   |
+| xorg-xkill                      |      |        |   |
+| xorg-xlsatoms                   |      |        |   |
+| xorg-xlsclients                 |      |        |   |
+| xorg-xmodmap                    |      |        |   |
+| xorg-xpr                        |      |        |   |
+| xorg-xrandr                     |      |        |   |
+| xorg-xrdb                       |      |        |   |
+| xorg-xrefresh                   |      |        |   |
+| xorg-xset                       |      |        |   |
+| xorg-xsetroot                   |      |        |   |
+| xorg-xvinfo                     |      |        |   |
+| xorg-xwayland                   |      |        |   |
+| xorg-xwd                        |      |        |   |
+| xorg-xwininfo                   |      |        |   |
+| xorg-xwud                       |      |        |   |
+| xwinwrap-git                    |      |        |   |
+| yay                             |      |        |   |
+| yt-dlp                          |      |        |   |
+| zellij                          |      |        |   |
+| zip                             |      |        |   |
+| zotero                          |      |        |   |
+| zoxide                          |      |        |   |
+| zsh                             |      |        |   |
+| zsh-autosuggestions             |      |        |   |
+| zsh-completions                 |      |        |   |
