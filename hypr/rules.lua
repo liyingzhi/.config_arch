@@ -35,6 +35,13 @@ hl.window_rule({ match = { float = false, workspace = "w[tv1]s[false]" }, roundi
 hl.window_rule({ match = { float = false, workspace = "f[1]s[false]" }, border_size = 0 })
 hl.window_rule({ match = { float = false, workspace = "f[1]s[false]" }, rounding = 0 })
 
+-- Any floating window show at workspace's center
+hl.window_rule({
+    name  = "floating-windows",
+    match = {float = true},
+    center =true,
+})
+
 -- Layer rules also return a handle.
 -- local overlayLayerRule = hl.layer_rule({
 --     name  = "no-anim-overlay",
