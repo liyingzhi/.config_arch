@@ -85,11 +85,58 @@ Having to sync by C-c C-c after (un)installing packages seems annoying, so I wen
                                 (seq-filter (lambda (p) (gethash p upstream-set)) upstream)))))
 #+end_src
 ** Generate a table which shows real installed packages by pacman or yay package manager
+*** 只显示“显式安装”的包（用户明确要求安装的）, Explicit
 #+begin_src emacs-lisp :results table :eval yes
   (let ((upstream (split-string (shell-command-to-string "pacman -Qeq"))))
     (mapcar (lambda (p) (list p "" "" ""))
             upstream))
 #+end_src
+*** 查看系统所有包, 包括依赖
+#+begin_src emacs-lisp :results table :eval yes
+  (let ((upstream (split-string (shell-command-to-string "pacman -Qq"))))
+    (mapcar (lambda (p) (list p "" "" ""))
+            upstream))
+#+end_src
+*** 备份系统软件列表
+#+begin_src bash
+  # 备份系统软件列表：
+  pacman -Qeq > pkglist.txt
+
+  # 以后重装 Arch：
+  sudo pacman -S --needed - < pkglist.txt
+#+end_src
+#+begin_example
+  # 命令解析
+  pacman -S	安装软件包
+  --needed	只安装尚未安装的包（跳过已安装的）
+  -	从标准输入读取包名列表
+  < pkglist.txt	将 pkglist.txt 的内容重定向到标准输入
+
+  # 工作原理流程图
+  pkglist.txt
+      │
+      │  内容：
+      │  vim
+      │  git
+      │  curl
+      │
+      ▼
+  < 重定向
+      │
+      ▼
+  标准输入 (stdin)
+      │
+      │  vim
+      │  git
+      │  curl
+      │
+      ▼
+  pacman -S --needed -
+      │
+      ▼
+  解析 stdin，逐个安装：
+      sudo pacman -S --needed vim git curl
+#+end_example
 * Install arch packages via org
 Similarly, when installing a package from Org-mode, we prompt for the package name (or package names, with completing-read-multiple), use ~org-link-open-from-string~ to jump to our installed table, update it, jump back, and emit an extra babel block for the user to execute, which actually installs things with pacman.
 ** pacman
