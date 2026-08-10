@@ -11,7 +11,7 @@
     // waybar -c /home/ii/.config/waybar/config1.jsonc -s /home/ii/.config/waybar/style1.css
 
     "position": "top",
-    "spacing": 1,
+    "spacing": 5,
     "height": 30,
     "modules-left": [
         "ext/workspaces",
@@ -47,7 +47,7 @@
     },
 
     "hyprland/window": {
-        "format": "👉 {class}",
+        "format": " {class}",
         // "separate-outputs": false
         // "max-length": 25,
         "separate-outputs": true

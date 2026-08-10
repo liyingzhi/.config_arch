@@ -1,8 +1,22 @@
-@define-color teal      #94e2d5;
+/* space wallpaper palette
+ * bg:  #1C1D2B #212231 #252535 #2E3040 #37384A
+ * fg:  #B8C4D8 #8D98B7 #A5C7E2 #99ACCE #E4D9D6
+ */
+@define-color bg0      #1C1D2B;
+@define-color bg1      #212231;
+@define-color bg2      #252535;
+@define-color bg3      #2E3040;
+@define-color bg4      #37384A;
+@define-color fg       #B8C4D8;
+@define-color muted    #8D98B7;
+@define-color accent   #A5C7E2;
+@define-color accent2  #99ACCE;
+@define-color star     #E4D9D6;
+@define-color teal     #94e2d5;
 
 * {
     border: none;
-    border-radius: 10;
+    border-radius: 10px;
     font-family: FiraCode Nerd Font;
     /* font-size: 25px; */
     /* min-height: 45px; */
@@ -21,82 +35,83 @@ window#waybar.hidden {
 }
 
 #workspaces {
-    background: #252733;
+    background: @bg2;
     margin-top: 6px;
     margin-left: 5px;
     border-radius: 15px;
 }
 
 #workspaces button {
-    background: #252733;
-    padding: 0 5px;
-    color: #c2caea;
+    background: transparent;
+    padding: 0 8px;
+    color: @muted;
+    border-radius: 10px;
+    transition: color 120ms ease, background-color 120ms ease;
 }
-#workspaces button.focused {
-    color: #ebaaaa;
-}
+#workspaces button.focused,
 #workspaces button.active {
-    color: #ebaaaa;
+    color: @star;
+    background: @bg4;
+    border-bottom: 1px solid @accent;
 }
 #workspaces button:hover {
     box-shadow: inherit;
     text-shadow: inherit;
+    background: @bg4;
+    color: @accent;
+    padding: 0 8px;
 }
-#workspaces button:hover {
-    background: #fdbdbd;
-    border: #e69e9e;
-    padding: 0 5px;
-}
+
 #window {
     margin-top: 6px;
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 10px;
-    transition: none;
-    color: #e69e9e;
-    background: #252733;
+    transition: color 120ms ease, background-color 120ms ease;
+    color: @accent2;
+    background: @bg2;
 }
+
 #tags {
     margin-top: 6px;
     margin-left: 12px;
     font-size: 4px;
     border-radius: 10px;
-    background: #161320;
-    transition: none;
+    background: @bg0;
+    transition: color 120ms ease, background-color 120ms ease;
 }
 
 #tags button {
-    transition: none;
-    color: #b5e8e0;
-    background: #b5e8e0;
+    transition: color 120ms ease, background-color 120ms ease;
+    color: @accent;
+    background: @accent;
     font-size: 16px;
     border-radius: 2px;
 }
 
 #tags button.occupied {
-    transition: none;
-    color: #f28fad;
+    transition: color 120ms ease, background-color 120ms ease;
+    color: @accent2;
     background: transparent;
     font-size: 4px;
 }
 
 #tags button.focused {
-    color: #abe9b3;
-    border-top: 2px solid #abe9b3;
-    border-bottom: 2px solid #abe9b3;
+    color: @star;
+    border-top: 2px solid @star;
+    border-bottom: 2px solid @star;
 }
 
 #tags button:hover {
-    transition: none;
+    transition: color 120ms ease, background-color 120ms ease;
     box-shadow: inherit;
     text-shadow: inherit;
-    color: #fae3b0;
-    border-color: #e8a2af;
-    color: #e8a2af;
+    color: @accent;
+    border-color: @accent;
 }
 
 #tags button.focused:hover {
-    color: #e8a2af;
+    color: @accent;
 }
 
 #network {
@@ -105,29 +120,31 @@ window#waybar.hidden {
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 10px;
-    transition: none;
-    color: #cd79c1;
-    background: #2d2d3a;
+    transition: color 120ms ease, background-color 120ms ease;
+    color: @accent2;
+    background: @bg3;
 }
+
 #temperature {
     margin-top: 6px;
     margin-left: 8px;
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 10px;
-    transition: none;
-    color: #7dda9f;
-    background-color: #252733;
+    transition: color 120ms ease, background-color 120ms ease;
+    color: @accent;
+    background-color: @bg2;
 }
+
 #pulseaudio {
     margin-top: 6px;
     margin-left: 8px;
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 10px;
-    transition: none;
-    color: #ac92c6;
-    background: #2d2d3a;
+    transition: color 120ms ease, background-color 120ms ease;
+    color: @muted;
+    background: @bg3;
 }
 
 #battery {
@@ -135,24 +152,21 @@ window#waybar.hidden {
     margin-left: 8px;
     padding-left: 10px;
     padding-right: 10px;
-    background-color: #161320;
-    color: #ac92c6;
+    border-radius: 10px;
+    transition: color 120ms ease, background-color 120ms ease;
+    background-color: @bg3;
+    color: @accent;
 }
 
 #battery.charging,
 #battery.plugged {
-    /* color: #161320; */
-    /* color: #ac92c6; */
-    color: #ffd700;
-    background-color: #2d2d3a;
-    /* background-color: #B5E8E0; */
+    color: @star;
+    background-color: @bg3;
 }
 
 #battery.critical:not(.charging) {
-    /* background-color: #B5E8E0; */
-    /* color: #161320; */
-    color: #ac92c6;
-    background-color: #2d2d3a;
+    color: @star;
+    background-color: @bg3;
     animation-name: blink;
     animation-duration: 0.5s;
     animation-timing-function: linear;
@@ -162,8 +176,8 @@ window#waybar.hidden {
 
 @keyframes blink {
     to {
-        background-color: #bf616a;
-        color: #b5e8e0;
+        background-color: #5A4A58;
+        color: @star;
     }
 }
 
@@ -173,9 +187,9 @@ window#waybar.hidden {
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 10px;
-    transition: none;
-    color: #161320;
-    background: #f8bd96;
+    transition: color 120ms ease, background-color 120ms ease;
+    color: @accent;
+    background: @bg3;
 }
 
 #taskbar {
@@ -184,22 +198,21 @@ window#waybar.hidden {
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 10px;
-    transition: none;
-    color: #aea4d0;
-    background: #45495c;
+    transition: color 120ms ease, background-color 120ms ease;
+    color: @fg;
+    background: @bg2;
 }
 
 #tray {
     margin-top: 6px;
     margin-left: 2px;
-    margin-right: 5px;
+    margin-right: 8px;
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 10px;
-    transition: none;
-    color: #aea4d0;
-    background: #45495c;
-    /*background: #1A1826;*/
+    transition: color 120ms ease, background-color 120ms ease;
+    color: @fg;
+    background: @bg4;
 }
 
 #memory {
@@ -208,19 +221,20 @@ window#waybar.hidden {
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 10px;
-    transition: none;
-    color: #7dda9f;
-    background-color: #252733;
+    transition: color 120ms ease, background-color 120ms ease;
+    color: @accent;
+    background-color: @bg2;
 }
+
 #cpu {
     margin-top: 6px;
     margin-left: 8px;
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 10px;
-    transition: none;
-    color: #f48f8f;
-    background-color: #252733;
+    transition: color 120ms ease, background-color 120ms ease;
+    color: @star;
+    background-color: @bg2;
 }
 
 #disk {
@@ -229,9 +243,9 @@ window#waybar.hidden {
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 10px;
-    transition: none;
-    color: rgb(228, 189, 134);
-    background: #2a3139;
+    transition: color 120ms ease, background-color 120ms ease;
+    color: @muted;
+    background: @bg2;
 }
 
 #clock {
@@ -240,9 +254,9 @@ window#waybar.hidden {
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 10px;
-    transition: none;
-    color: #e68da5;
-    background: #292c3a;
+    transition: color 120ms ease, background-color 120ms ease;
+    color: @star;
+    background: @bg3;
 }
 
 #custom-launcher {
@@ -252,9 +266,9 @@ window#waybar.hidden {
     padding-left: 10px;
     padding-right: 5px;
     border-radius: 10px;
-    transition: none;
-    color: #e17f69;
-    background: #312e2e;
+    transition: color 120ms ease, background-color 120ms ease;
+    color: @accent;
+    background: @bg2;
 }
 
 #custom-power {
@@ -265,9 +279,9 @@ window#waybar.hidden {
     padding-left: 10px;
     padding-right: 5px;
     border-radius: 10px;
-    transition: none;
-    color: #161320;
-    background: #f28fad;
+    transition: color 120ms ease, background-color 120ms ease;
+    color: @star;
+    background: @bg2;
 }
 
 #custom-wallpaper {
@@ -276,9 +290,9 @@ window#waybar.hidden {
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 10px;
-    transition: none;
-    color: #161320;
-    background: #c9cbff;
+    transition: color 120ms ease, background-color 120ms ease;
+    color: @accent2;
+    background: @bg2;
 }
 
 #custom-media {
@@ -287,9 +301,9 @@ window#waybar.hidden {
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 10px;
-    transition: none;
-    color: #161320;
-    background: #f2cdcd;
+    transition: color 120ms ease, background-color 120ms ease;
+    color: @star;
+    background: @bg2;
 }
 
 #custom-notification {
@@ -298,7 +312,7 @@ window#waybar.hidden {
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 10px;
-    transition: none;
-    color: #aea4d0;
-    background: #45495c;
+    transition: color 120ms ease, background-color 120ms ease;
+    color: @fg;
+    background: @bg4;
 }
