@@ -60,7 +60,9 @@
         "interval": 1,
         "format": "{:%Y-%m-%d %H:%M}",
         "format-alt": "{:%Y-%m-%d %H:%M:%S 星期 %w }",
-        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        // "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        // "tooltip-format": "<span size='12pt' font='WenQuanYi Zen Hei Mono'>{calendar}</span>",
+        "tooltip-format": "<span size='12pt' font='PragmataPro Mono'>{calendar}</span>",
         "calendar": {
             "mode": "month",
             "mode-mon-col": 3,
