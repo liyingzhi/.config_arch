@@ -40,6 +40,7 @@ hl.window_rule({
     name  = "floating-windows",
     match = {float = true},
     center =true,
+    size   = "(monitor_w*0.5) (monitor_h*0.6)",
 })
 
 -- Layer rules also return a handle.
