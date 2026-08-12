@@ -1,0 +1,20 @@
+#!/bin/sh
+
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
+echo -e "${RED}更新系统软件:${NC}"
+yay -Syu
+
+# 更新 rustup（如果已安装）
+if command -v rustup >/dev/null 2>&1; then
+    echo -e "${RED}更新 rustup:${NC}"
+    rustup update
+fi
+
+# 更新 uv（如果已安装）
+if command -v uv >/dev/null 2>&1; then
+    echo -e "${RED}更新 uv:${NC}"
+    uv self update
+    uv tool upgrade --all
+fi
