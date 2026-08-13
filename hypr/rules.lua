@@ -36,11 +36,12 @@ hl.window_rule({ match = { float = false, workspace = "f[1]s[false]" }, border_s
 hl.window_rule({ match = { float = false, workspace = "f[1]s[false]" }, rounding = 0 })
 
 -- Any floating window show at workspace's center
-hl.window_rule({
-    name  = "floating-windows",
-    match = {float = true},
-    size   = "(monitor_w*0.5) (monitor_h*0.6)",
-})
+-- hl.window_rule({
+--     name  = "floating-windows",
+--     match = {float = true},
+--     center = true,
+--     size   = "(monitor_w*0.5) (monitor_h*0.6)",
+-- })
 
 -- Layer rules also return a handle.
 -- local overlayLayerRule = hl.layer_rule({
@@ -174,3 +175,13 @@ hl.window_rule({
     match = { class = "flameshot", title = "flameshot-pin" },
     move  = { "cursor_x-(window_w*0.5)", "cursor_y-(window_h*0.5)" },
 })
+
+-- xdg-desktop-portal-* floating window show at workspace's center with size (0.5, 0.6)
+hl.window_rule({
+    name  = "xdg-desktop-protal-*-floating-windows",
+    match = {float = true, class = "xdg-desktop-portal-.*"},
+    center = true,
+    size   = "(monitor_w*0.5) (monitor_h*0.6)",
+})
+
+
