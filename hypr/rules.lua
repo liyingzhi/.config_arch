@@ -39,7 +39,6 @@ hl.window_rule({ match = { float = false, workspace = "f[1]s[false]" }, rounding
 hl.window_rule({
     name  = "floating-windows",
     match = {float = true},
-    center =true,
     size   = "(monitor_w*0.5) (monitor_h*0.6)",
 })
 
@@ -130,6 +129,12 @@ hl.window_rule({
 
     focus_on_activate = true,
     workspace = "8",
+})
+-- center the WeiXin login floating window
+hl.window_rule({
+    name  = "wechat",
+    match = { float = true, title = ".*Weixin.*" },
+    center = true,
 })
 
 -- AudioRelay: workspace 9
