@@ -15,6 +15,5 @@ fi
 # 更新 uv（如果已安装）
 if command -v uv >/dev/null 2>&1; then
     echo -e "${RED}更新 uv:${NC}"
-    uv self update
     uv tool upgrade --all
 fi
