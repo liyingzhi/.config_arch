@@ -184,4 +184,11 @@ hl.window_rule({
     size   = "(monitor_w*0.5) (monitor_h*0.6)",
 })
 
-
+-- custom group floating windows show at workspace's center with size (0.5, 0.5)
+hl.window_rule({
+    name  = "custom-group-floating-windows",
+    -- example: match = {float = true, class = "Zotero|ABC.*|xx|yy.*"},
+    match = {float = true, class = "Zotero"},
+    center = true,
+    size   = "(monitor_w*0.5) (monitor_h*0.5)",
+})
