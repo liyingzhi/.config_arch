@@ -26,12 +26,12 @@ hl.bind(
 -- Application launchers
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + CTRL + E", hl.dsp.exec_cmd(focus_or_raise("emacs", "Emacs", "emacs")))
-hl.bind(mainMod .. " + CTRL + S", hl.dsp.exec_cmd(focus_or_raise("localsend", "localsend", "localsend")))
+hl.bind(mainMod .. " + CTRL + S", hl.dsp.exec_cmd(focus_or_raise("org.localsend.localsend_app", "org.localsend.localsend_app", "localsend")))
 hl.bind(mainMod .. " + CTRL + I", hl.dsp.exec_cmd(focus_or_raise("emacs", "Emacs", "igcemacs")))
 hl.bind(mainMod .. " + CTRL + K", hl.dsp.exec_cmd(focus_or_raise(terminal, terminal, terminal)))
 hl.bind(mainMod .. " + CTRL + T", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + CTRL + F", hl.dsp.exec_cmd(focus_or_raise(browser, browser, browser)))
-hl.bind(mainMod .. " + CTRL + N", hl.dsp.exec_cmd(focus_or_raise(filemanager, filemanager, filemanager)))
+hl.bind(mainMod .. " + CTRL + N", hl.dsp.exec_cmd(focus_or_raise(filemanager, "Thunar", filemanager)))
 hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd(terminal .. " btop"))
 
 -- Window management
