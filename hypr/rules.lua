@@ -129,13 +129,9 @@ hl.window_rule({
     match = { class = ".*wechat.*", title = ".*Weixin.*" },
 
     focus_on_activate = true,
+    border_size = 3,
+    rounding = 6,
     workspace = "8",
-})
--- center the wechat login floating window
-hl.window_rule({
-    name  = "wechat-floating",
-    match = { float = true, class = ".*wechat.*", title = ".*Weixin.*" },
-    center = true,
 })
 -- no effects rendering for wechat floating window
 hl.window_rule({
@@ -145,6 +141,15 @@ hl.window_rule({
     decorate    = false,
     no_blur     = true,
     no_shadow   = true,
+})
+-- center the wechat login floating window
+hl.window_rule({
+    name  = "wechat-floating",
+    match = { float = true, class = ".*wechat.*", title = ".*(Weixin|Open).*" },
+    border_size = 3,
+    rounding = 6,
+    center = true,
+    decorate    = true,
 })
 
 -- AudioRelay: workspace 9
