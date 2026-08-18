@@ -108,3 +108,6 @@ hl.define_submap("resize", function()
 	hl.bind("j", hl.dsp.window.resize({ x = 0, y = 10, relative = true }), { repeating = true })
 	hl.bind("escape", hl.dsp.submap("reset"))
 end)
+
+-- Debug test to dump hyprland client list
+hl.bind(mainMod .. " + CTRL + D", hl.dsp.exec_cmd("hyprctl clients > /home/ii/test/test.txt"))
