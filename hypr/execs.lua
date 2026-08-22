@@ -5,6 +5,7 @@ hl.on("hyprland.start", function ()
   -- hl.exec_cmd("~/.config/hypr/scripts/background-video.sh")
   hl.exec_cmd("hyprpaper")
   hl.exec_cmd("waybar")
+  hl.exec_cmd("flameshot")
 
   -- Input method
   hl.exec_cmd("fcitx5 --replace -d")

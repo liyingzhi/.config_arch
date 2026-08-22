@@ -26,8 +26,9 @@ hl.bind(mainMod .. " + S",         hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + F",         hl.dsp.window.fullscreen())
 
 -- Screenshot
-hl.bind(mainMod .. " + CTRL + S",  hl.dsp.exec_cmd("hyprshot -m region --clipboard-only"))
-hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("hyprshot -m window"))
+hl.bind(mainMod .. " + CTRL + R",  hl.dsp.exec_cmd("hyprshot -m region --clipboard-only"))
+hl.bind(mainMod .. " + CTRL + S",  hl.dsp.exec_cmd("flameshot gui"))
+hl.bind(mainMod .. " + CTRL + W", hl.dsp.exec_cmd("hyprshot -m window"))
 
 -- Clipboard
 -- yay -S clipvault
