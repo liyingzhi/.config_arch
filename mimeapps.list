@@ -1,0 +1,22 @@
+
+[Default Applications]
+x-scheme-handler/baiduyunguanjia=baidunetdisk.desktop
+
+[Default Applications]
+inode/directory=thunar.desktop
+
+[Default Applications]
+image/png=nsxiv.desktop
+image/jpeg=nsxiv.desktop
+image/gif=nsxiv.desktop
+image/webp=nsxiv.desktop
+image/x-portable-anymap=nsxiv.desktop
+image/x-portable-bitmap=nsxiv.desktop
+image/x-portable-graymap=nsxiv.desktop
+image/bmp=nsxiv.desktop
+image/tiff=nsxiv.desktop
+image/x-targa=nsxiv.desktop
+image/x-ico=nsxiv.desktop
+image/x-xbitmap=nsxiv.desktop
+image/x-win-bitmap=nsxiv.desktop
+
