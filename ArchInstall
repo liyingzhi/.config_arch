@@ -82,6 +82,16 @@ install_mount() {
 }
 
 # ============================================
+# 6. File manager & image viewer
+# ============================================
+install_file_manager() {
+  info "File manager (Thunar) & Image viewer (nsxiv)"
+  sudo pacman -S --noconfirm thunar thunar-volman thunar-archive-plugin
+  sudo pacman -S --noconfirm nsxiv
+  done_section
+}
+
+# ============================================
 # 6. NVIDIA drivers
 # ============================================
 install_nvidia() {
@@ -158,10 +168,11 @@ echo "  2) Terminal / Launcher / Browser (kitty, rofi, firefox)"
 echo "  3) Input method (Fcitx5)"
 echo "  4) Audio (PulseAudio)"
 echo "  5) Mount utilities (udisks2, udiskie)"
-echo "  6) NVIDIA driver"
-echo "  7) Fonts"
-echo "  8) Clash"
-echo "  9) Exit"
+echo "  6) File manager & Image viewer (Thunar, nsxiv)"
+echo "  7) NVIDIA driver"
+echo "  8) Fonts"
+echo "  9) Clash"
+echo "  10) Exit"
 echo ""
 echo -en "\033[1;33m??\033[0m Enter number (default: 0): "
 read -r choice
@@ -175,6 +186,7 @@ case "${choice:-0}" in
     ask_next "Input method (Fcitx5)" && install_input_method
     ask_next "Audio (PulseAudio)" && install_audio
     ask_next "Mount utilities" && install_mount
+    ask_next "File manager & Image viewer" && install_file_manager
     ask_next "NVIDIA driver" && install_nvidia
     ask_next "Fonts" && install_fonts
     ask_next "Clash" && install_clash
@@ -184,9 +196,10 @@ case "${choice:-0}" in
   3) install_input_method ;;
   4) install_audio ;;
   5) install_mount ;;
-  6) install_nvidia ;;
-  7) install_fonts ;;
-  8) install_clash ;;
+  6) install_file_manager ;;
+  7) install_nvidia ;;
+  8) install_fonts ;;
+  9) install_clash ;;
   9)
     echo -e "\033[1;33mExiting installer.\033[0m"
     exit 0
