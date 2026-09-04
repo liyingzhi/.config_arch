@@ -3,6 +3,9 @@
 
 -- Example window rules that are useful
 
+local size_half = "(monitor_w*0.5) (monitor_h*0.5)"
+local size_half_tall = "(monitor_w*0.5) (monitor_h*0.6)"
+
 local suppressMaximizeRule = hl.window_rule({
     -- Ignore maximize requests from all apps. You'll probably like this.
     name  = "suppress-maximize-events",
@@ -60,6 +63,7 @@ hl.window_rule({
     float = true,
 })
 
+-- Workspace assignments
 -- Emacs: workspace 1, fullscreen
 hl.window_rule({
     name  = "emacs",
@@ -133,6 +137,16 @@ hl.window_rule({
     rounding = 6,
     workspace = "8",
 })
+
+-- AudioRelay: workspace 9
+hl.window_rule({
+    name  = "audiorelay",
+    match = { title = "AudioRelay" },
+
+    focus_on_activate = true,
+    workspace = "9",
+})
+
 -- no effects rendering for wechat floating window
 hl.window_rule({
     name  = "wechat-floating-no-effect",
@@ -152,15 +166,6 @@ hl.window_rule({
     decorate    = true,
 })
 
--- AudioRelay: workspace 9
-hl.window_rule({
-    name  = "audiorelay",
-    match = { title = "AudioRelay" },
-
-    focus_on_activate = true,
-    workspace = "9",
-})
-
 -- Volume Control: float, center, 50% size
 hl.window_rule({
     name  = "volume-control",
@@ -168,7 +173,7 @@ hl.window_rule({
 
     float  = true,
     center = true,
-    size   = "(monitor_w*0.5) (monitor_h*0.5)",
+    size   = size_half,
 })
 
 -- flameshot
@@ -195,7 +200,7 @@ hl.window_rule({
     name  = "xdg-desktop-protal-*-floating-windows",
     match = {float = true, class = "xdg-desktop-portal-.*"},
     center = true,
-    size   = "(monitor_w*0.5) (monitor_h*0.6)",
+    size   = size_half_tall,
 })
 
 -- custom group floating windows show at workspace's center with size (0.5, 0.5)
@@ -204,5 +209,5 @@ hl.window_rule({
     -- example: match = {float = true, class = "Zotero|ABC.*|xx|yy.*"},
     match = {float = true, class = "Zotero"},
     center = true,
-    size   = "(monitor_w*0.5) (monitor_h*0.5)",
+    size   = size_half,
 })
