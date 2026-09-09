@@ -204,11 +204,19 @@ hl.window_rule({
 })
 
 -- custom group floating windows show at workspace's center with size (0.5, 0.5)
+-- hl.window_rule({
+--     name  = "custom-group-floating-windows",
+--     -- example: match = {float = true, class = "Zotero|ABC.*|xx|yy.*"},
+--     -- match = {float = true, class = "Zotero"},
+--     match = {float = true, class = "custom-placeholder"},
+--     center = true,
+--     size   = size_half,
+-- })
+
+-- custom for Zotero new class window show at workspace's center with size (0.3, 0.2)
 hl.window_rule({
-    name  = "custom-group-floating-windows",
-    -- example: match = {float = true, class = "Zotero|ABC.*|xx|yy.*"},
-    -- match = {float = true, class = "Zotero"},
-    match = {float = true, class = "custom-placeholder"},
+    name  = "custom-title-floating-windows",
+    match = {float = true, title = "新建分类", class = "Zotero" },
     center = true,
-    size   = size_half,
+    size   = "(monitor_w*0.3) (monitor_h*0.2)",
 })
