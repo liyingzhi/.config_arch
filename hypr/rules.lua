@@ -207,7 +207,8 @@ hl.window_rule({
 hl.window_rule({
     name  = "custom-group-floating-windows",
     -- example: match = {float = true, class = "Zotero|ABC.*|xx|yy.*"},
-    match = {float = true, class = "Zotero"},
+    -- match = {float = true, class = "Zotero"},
+    match = {float = true, class = "custom-placeholder"},
     center = true,
     size   = size_half,
 })
