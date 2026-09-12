@@ -34,3 +34,7 @@
 !/wallpapers/
 !ArchPackageManager.org
 !mimeapps.list
+
+!FreeFileSync/
+FreeFileSync/*
+!FreeFileSync/GlobalSettings.xml
