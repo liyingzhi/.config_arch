@@ -84,7 +84,7 @@ end)
 
 -- Cycle through windows in the current workspace
 bind_mods({ mainMod, sub1Mod }, "J", hl.dsp.window.cycle_next())
-hl.bind(chord(mainMod, "K"), hl.dsp.window.cycle_next({ next = false }))
+bind_mods({ mainMod, sub1Mod }, "K", hl.dsp.window.cycle_next({ next = false }))
 
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window: SHIFT for 1-8, CTRL for 9-0
