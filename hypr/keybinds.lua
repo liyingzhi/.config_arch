@@ -20,16 +20,30 @@ end
 --- Focus an existing window by class (case-insensitive match), or launch command.
 --- `match_class` is compared case-insensitively to client class;
 --- `focus_class` is the Hyprland class selector used when focusing.
+--- When multiple windows match, cycles through them in order; each press
+--- focuses the next matching window.
 local function focus_or_raise(match_class, focus_class, command)
 	local needle = string.lower(match_class)
+	local last_index = 0
 	return function()
-		for _, w in ipairs(hl.get_windows()) do
+		local matches = {}
+		for i, w in ipairs(hl.get_windows()) do
 			if string.lower(w.class) == needle then
-				hl.dispatch(hl.dsp.focus({ window = "class:" .. focus_class }))
-				return
+				table.insert(matches, i)
 			end
 		end
-		hl.exec_cmd(command)
+		if #matches == 0 then
+			hl.exec_cmd(command)
+			return
+		end
+		-- advance to the next match (wraps around); restart from beginning if list shrank
+		if last_index < 1 or last_index > #matches then
+			last_index = 0
+		end
+		last_index = last_index % #matches + 1
+		local target = matches[last_index]
+		local w = hl.get_windows()[target]
+		hl.dispatch(hl.dsp.focus({ window = "address:" .. w.address }))
 	end
 end
 
