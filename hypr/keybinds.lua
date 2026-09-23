@@ -26,8 +26,9 @@ local function focus_or_raise(match_class, focus_class, command)
 	local needle = string.lower(match_class)
 	local last_index = 0
 	return function()
+		local windows = hl.get_windows()
 		local matches = {}
-		for i, w in ipairs(hl.get_windows()) do
+		for i, w in ipairs(windows) do
 			if string.lower(w.class) == needle then
 				table.insert(matches, i)
 			end
@@ -36,13 +37,23 @@ local function focus_or_raise(match_class, focus_class, command)
 			hl.exec_cmd(command)
 			return
 		end
-		-- advance to the next match (wraps around); restart from beginning if list shrank
-		if last_index < 1 or last_index > #matches then
-			last_index = 0
+		-- if the active window matches, start from it so we always jump to the next one
+		local start = last_index
+		local active = hl.get_active_window()
+		if active then
+			for pos, idx in ipairs(matches) do
+				if windows[idx].address == active.address then
+					start = pos
+					break
+				end
+			end
 		end
-		last_index = last_index % #matches + 1
-		local target = matches[last_index]
-		local w = hl.get_windows()[target]
+		-- advance to the next match (wraps around); restart from beginning if list shrank
+		if start < 1 or start > #matches then
+			start = 0
+		end
+		last_index = start % #matches + 1
+		local w = windows[matches[last_index]]
 		hl.dispatch(hl.dsp.focus({ window = "address:" .. w.address }))
 	end
 end
