@@ -13,7 +13,7 @@ hl.on("hyprland.start", function()
 	-- Input method
 	hl.exec_cmd("fcitx5 --replace -d")
 
-	-- Clipboard (use clipvault)
+	-- Clipboard (use clipvault and wl-clipboard)
 	hl.exec_cmd("wl-paste --watch clipvault store")
 
 	-- Clipboard (use clipcatd)
