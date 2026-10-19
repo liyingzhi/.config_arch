@@ -2,7 +2,8 @@ local mainMod = "ALT" -- primary modifier
 local sub1Mod = "SUPER" -- secondary modifier
 local sub2Mod = "CTRL" -- tertiary modifier
 
-local menu = "rofi -show combi -combi-modes window,drun,run,filebrowser -modes combi"
+local menu = "rofi -show combi -combi-modes window,drun,run,filebrowser -modes combi -matching fuzzy"
+local menu_windows = "rofi -show window -matching fuzzy"
 local terminal = "kitty"
 local browser = "firefox"
 local filemanager = "thunar" -- dolphin, thunar
@@ -66,6 +67,8 @@ hl.bind(
 
 -- Application launchers
 hl.bind(chord(mainMod, "SPACE"), hl.dsp.exec_cmd(menu))
+hl.bind(chord(sub1Mod, "W"), hl.dsp.exec_cmd(menu_windows))
+
 hl.bind(chord(mainMod, "CTRL + E"), focus_or_raise("emacs", "[Ee]macs", "emacs"))
 hl.bind(
 	chord(mainMod, "CTRL + S"),
