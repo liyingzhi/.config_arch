@@ -64,6 +64,8 @@ hl.bind(
 	chord(sub1Mod, "CTRL + Q"),
 	hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'")
 )
+-- Lock screen
+hl.bind(chord(sub1Mod, "L"), hl.dsp.exec_cmd("hyprlock"))
 
 -- Application launchers
 hl.bind(chord(mainMod, "SPACE"), hl.dsp.exec_cmd(menu))
