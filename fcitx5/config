@@ -7,8 +7,6 @@ ActivateKeys=
 DeactivateKeys=
 # Consume redundant Activate/Deactivate key
 # ConsumeRedundantActivateKeys=False
-# Enumerate Input Method Forward
-# EnumerateForwardKeys=
 # Enumerate Input Method Backward
 # EnumerateBackwardKeys=
 # Skip first input method while enumerating
@@ -23,10 +21,13 @@ EnumerateGroupBackwardKeys=
 [Hotkey/TriggerKeys]
 0=Control+Shift+Shift_L
 1=Control+Alt+space
-2=Alt+question
+2=Shift+Shift_L
 
 # [Hotkey/AltTriggerKeys]
 # 0=Shift_L
+
+[Hotkey/EnumerateForwardKeys]
+0=Alt+question
 
 # [Hotkey/PrevPage]
 # 0=Up
