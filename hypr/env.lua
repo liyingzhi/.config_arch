@@ -12,5 +12,7 @@ hl.env("HYPRCURSOR_SIZE", "64")
 
 -- Fcitx5
 -- Ref: https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland
+-- hl.env("GTK_IM_MODULE", "fcitx")
 hl.env("QT_IM_MODULE", "fcitx")
+hl.env("QT_IM_MODULES", "wayland;fcitx;ibus")
 hl.env("XMODIFIERS", "@im=fcitx")
